@@ -1,4 +1,4 @@
-package com.semicolon.africa.House.Management.System.models;
+package com.semicolon.africa.House.Management.System.data.models;
 
 
 public enum Gender {

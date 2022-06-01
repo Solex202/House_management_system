@@ -1,4 +1,4 @@
-package com.semicolon.africa.House.Management.System.models;
+package com.semicolon.africa.House.Management.System.data.models;
 
 
 import lombok.AllArgsConstructor;
@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
+import java.util.Set;
 
 @Builder
 @Data
@@ -27,7 +28,8 @@ public class User {
     private String password;
     @Min(6)
     private String confirmPassword;
-    @Enum
+
     private Gender gender;
     private Room room;
+//    private Set<Role> roles;
 }
