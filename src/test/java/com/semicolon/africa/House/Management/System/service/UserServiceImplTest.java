@@ -3,6 +3,7 @@ package com.semicolon.africa.House.Management.System.service;
 import com.semicolon.africa.House.Management.System.data.models.Gender;
 import com.semicolon.africa.House.Management.System.data.models.RoomType;
 import com.semicolon.africa.House.Management.System.dtos.request.CreateUserRequest;
+import com.semicolon.africa.House.Management.System.exception.EmailAlreadyExistsException;
 import com.semicolon.africa.House.Management.System.exception.PasswordMustMatchException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +59,35 @@ class UserServiceImplTest {
         assertThrows(PasswordMustMatchException.class, ()-> userService.createUser(createUserRequest));
     }
 
+    @Test
+    void testThatUserCannotCreateAccount_if_emailAlreadyExist(){
+        //given
+        CreateUserRequest createUserRequest = CreateUserRequest.builder()
+                .firstName("lota")
+                .lastName("solomon")
+                .email("lota@gmail.com")
+                .password("lota123")
+                .confirmPassword("lota123")
+                .gender(Gender.MALE)
+                .build();
+
+        userService.createUser(createUserRequest);
+
+        CreateUserRequest createUserRequest2 = CreateUserRequest.builder()
+                .firstName("gina")
+                .lastName("dimma")
+                .email("lota@gmail.com")
+                .password("ginagina")
+                .confirmPassword("ginagina")
+                .gender(Gender.FEMALE)
+                .build();
+
+        assertThrows(EmailAlreadyExistsException.class, ()-> userService.createUser(createUserRequest2));
+    }
+
+
     @AfterEach
     void tearDown() {
+        userService.deleteAll();
     }
 }

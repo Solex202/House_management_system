@@ -10,4 +10,6 @@ public interface UserService {
     UserDto createUser(CreateUserRequest createUserRequest);
 
     List<User> getAllUsers();
+
+    void deleteAll();
 }

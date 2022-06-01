@@ -5,6 +5,7 @@ import com.semicolon.africa.House.Management.System.data.models.User;
 import com.semicolon.africa.House.Management.System.data.repository.UserRepository;
 import com.semicolon.africa.House.Management.System.dtos.UserDto;
 import com.semicolon.africa.House.Management.System.dtos.request.CreateUserRequest;
+import com.semicolon.africa.House.Management.System.exception.EmailAlreadyExistsException;
 import com.semicolon.africa.House.Management.System.exception.PasswordMustMatchException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ private ModelMapper mapper = new ModelMapper();
 
     @Override
     public UserDto createUser(CreateUserRequest createUserRequest) {
+        if(emailAlreadyExists(createUserRequest.getEmail())){
+            throw new EmailAlreadyExistsException("email already exist");
+        }
         if(!createUserRequest.getPassword().matches(createUserRequest.getConfirmPassword())){
             throw new PasswordMustMatchException("passwords must match");
         }
@@ -39,8 +43,17 @@ private ModelMapper mapper = new ModelMapper();
         return mapper.map(user, UserDto.class);
     }
 
+    private boolean emailAlreadyExists(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
+
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteAll() {
+        userRepository.deleteAll();
     }
 }
