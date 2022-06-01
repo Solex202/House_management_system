@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AssignRoomRequest {
-
+    private String admin;
     private Room room;
-    private String user;
-}
+    private String newOccupant;}

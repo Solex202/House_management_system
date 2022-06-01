@@ -122,7 +122,7 @@ class UserServiceImplTest {
         Room room = new Room();
         room.setRoomNumber(3);
         room.setRoomType(RoomType.FEMALE_WING);
-        AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, createUserRequest2.getEmail());
+        AssignRoomRequest assignRoomRequest = new AssignRoomRequest(createUserRequest.getEmail(),room, createUserRequest2.getEmail());
 
 
         AssignRoomResponse assignRoomResponse = userService.assignRoom(assignRoomRequest);
