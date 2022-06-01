@@ -11,13 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Room {
 
-    private String id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
-    private String confirmPassword;
-    private Gender gender;
+
 
 
 }
