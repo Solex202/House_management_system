@@ -9,13 +9,18 @@ import org.springframework.data.annotation.Id;
 @Builder
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Room {
 
     @Id
     private String roomNumber;
     private final int TOTAL_ROOMS = 60;
     private RoomType type;
+
+    public Room(String roomNumber, RoomType type) {
+        this.roomNumber = roomNumber;
+        this.type = type;
+    }
+
 
 
 

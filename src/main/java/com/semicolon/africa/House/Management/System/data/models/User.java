@@ -12,11 +12,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import java.util.Set;
 
-@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Validated
+@Builder
 public class User {
     @Id
     private String id;
@@ -30,6 +30,6 @@ public class User {
     private String confirmPassword;
 
     private Gender gender;
-    private Room room;
+//    private Room room;
 //    private Set<Role> roles;
 }
