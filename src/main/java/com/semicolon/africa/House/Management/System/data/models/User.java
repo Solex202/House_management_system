@@ -1,5 +1,6 @@
 package com.semicolon.africa.House.Management.System.models;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ import javax.validation.constraints.Min;
 @NoArgsConstructor
 @AllArgsConstructor
 @Validated
-public class Admin {
+public class User {
     @Id
     private String id;
     private String firstName;
@@ -26,4 +27,7 @@ public class Admin {
     private String password;
     @Min(6)
     private String confirmPassword;
+    @Enum
+    private Gender gender;
+    private Room room;
 }
