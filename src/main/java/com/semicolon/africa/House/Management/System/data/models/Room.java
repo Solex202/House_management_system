@@ -1,24 +1,23 @@
 package com.semicolon.africa.House.Management.System.data.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 
 @Builder
 @Data
 @NoArgsConstructor
+//@RequiredArgsConstructor
 public class Room {
 
     @Id
-    private String roomNumber;
+    private int roomNumber;
     private final int TOTAL_ROOMS = 60;
-    private RoomType type;
+    private RoomType roomType;
 
-    public Room(String roomNumber, RoomType type) {
+    public Room(int roomNumber, RoomType type) {
         this.roomNumber = roomNumber;
-        this.type = type;
+        this.roomType = type;
+
     }
 
 

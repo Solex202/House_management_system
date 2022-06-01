@@ -2,6 +2,7 @@ package com.semicolon.africa.House.Management.System.dtos.request;
 
 import com.semicolon.africa.House.Management.System.data.models.Gender;
 import com.semicolon.africa.House.Management.System.data.models.Room;
+import com.semicolon.africa.House.Management.System.dtos.response.AssignRoomResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,4 +30,6 @@ public class CreateUserRequest {
 
     private Gender gender;
     private Room room;
+
+
 }

@@ -4,7 +4,9 @@ package com.semicolon.africa.House.Management.System.service;
 import com.semicolon.africa.House.Management.System.data.models.User;
 import com.semicolon.africa.House.Management.System.data.repository.UserRepository;
 import com.semicolon.africa.House.Management.System.dtos.UserDto;
+import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.request.CreateUserRequest;
+import com.semicolon.africa.House.Management.System.dtos.response.AssignRoomResponse;
 import com.semicolon.africa.House.Management.System.exception.EmailAlreadyExistsException;
 import com.semicolon.africa.House.Management.System.exception.PasswordMustMatchException;
 import org.modelmapper.ModelMapper;
@@ -55,5 +57,10 @@ private ModelMapper mapper = new ModelMapper();
     @Override
     public void deleteAll() {
         userRepository.deleteAll();
+    }
+
+    @Override
+    public AssignRoomResponse assignRoom(AssignRoomRequest assignRoomRequest) {
+        return null;
     }
 }
