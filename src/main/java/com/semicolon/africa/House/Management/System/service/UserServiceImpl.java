@@ -1,7 +1,6 @@
 package com.semicolon.africa.House.Management.System.service;
 
 
-import com.semicolon.africa.House.Management.System.data.models.Gender;
 import com.semicolon.africa.House.Management.System.data.models.Room;
 import com.semicolon.africa.House.Management.System.data.models.RoomType;
 import com.semicolon.africa.House.Management.System.data.models.User;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -77,7 +75,10 @@ private ModelMapper mapper = new ModelMapper();
         if(assignRoomRequest.getRoom().getRoomNumber() > 60){
 
             throw new RoomNumberDoesNotExistException("room not available");
+        }
 
+        if(assignRoomRequest.getRoom().getRoomNumber() < 1){
+            throw new RoomNumberDoesNotExistException("room not available");
         }
         Room room = new Room();
         room.setEmail(user.getEmail());
