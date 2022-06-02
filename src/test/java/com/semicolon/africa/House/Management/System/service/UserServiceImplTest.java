@@ -1,26 +1,18 @@
 package com.semicolon.africa.House.Management.System.service;
 
 import com.semicolon.africa.House.Management.System.data.models.Gender;
-import com.semicolon.africa.House.Management.System.data.models.Room;
-import com.semicolon.africa.House.Management.System.data.models.RoomType;
-import com.semicolon.africa.House.Management.System.data.models.User;
-import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
-import com.semicolon.africa.House.Management.System.dtos.request.CreateUserRequest;
-import com.semicolon.africa.House.Management.System.dtos.response.AssignRoomResponse;
+import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
 import com.semicolon.africa.House.Management.System.exception.EmailAlreadyExistsException;
 import com.semicolon.africa.House.Management.System.exception.PasswordMustMatchException;
-import com.semicolon.africa.House.Management.System.exception.RoomNumberDoesNotExistException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -36,9 +28,9 @@ class UserServiceImplTest {
     }
 
     @Test
-    void testThatCanCreateUser(){
+    void testThatCanUserCanBookRoom(){
         //given
-        CreateUserRequest createUserRequest = CreateUserRequest.builder()
+        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
@@ -47,15 +39,15 @@ class UserServiceImplTest {
                 .gender(Gender.MALE)
                 .build();
 
-        userService.createUser(createUserRequest);
+        userService.bookRoom(bookRoomRequest);
 
         assertThat(userService.getAllUsers().size(), is(1));
     }
 
     @Test
-    void testThatUserCannotCreateAccount_if_passwordsDontMatch(){
+    void testThatUserCannotBookRoom_if_passwordsDontMatch_throwException(){
         //given
-        CreateUserRequest createUserRequest = CreateUserRequest.builder()
+        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
@@ -64,13 +56,13 @@ class UserServiceImplTest {
                 .gender(Gender.MALE)
                 .build();
 
-        assertThrows(PasswordMustMatchException.class, ()-> userService.createUser(createUserRequest));
+        assertThrows(PasswordMustMatchException.class, ()-> userService.bookRoom(bookRoomRequest));
     }
 
     @Test
-    void testThatUserCannotCreateAccount_if_emailAlreadyExist(){
+    void testThatUserCannotBookRoom_if_emailAlreadyExist_throwException(){
         //given
-        CreateUserRequest createUserRequest = CreateUserRequest.builder()
+        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
@@ -79,9 +71,9 @@ class UserServiceImplTest {
                 .gender(Gender.MALE)
                 .build();
 
-        userService.createUser(createUserRequest);
+        userService.bookRoom(bookRoomRequest);
 
-        CreateUserRequest createUserRequest2 = CreateUserRequest.builder()
+        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
                 .firstName("gina")
                 .lastName("dimma")
                 .email("lota@gmail.com")
@@ -90,118 +82,10 @@ class UserServiceImplTest {
                 .gender(Gender.FEMALE)
                 .build();
 
-        assertThrows(EmailAlreadyExistsException.class, ()-> userService.createUser(createUserRequest2));
+        assertThrows(EmailAlreadyExistsException.class, ()-> userService.bookRoom(bookRoomRequest2));
     }
 
-    @Test
-    void testThatAdminUserCamAssignRoom(){
-        CreateUserRequest createUserRequest = CreateUserRequest.builder()
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
-                .gender(Gender.MALE)
-                .build();
 
-        userService.createUser(createUserRequest);
-
-        CreateUserRequest createUserRequest2 = CreateUserRequest.builder()
-                .firstName("gina")
-                .lastName("dimma")
-                .email("gina@gmail.com")
-                .password("ginagina")
-                .confirmPassword("ginagina")
-                .gender(Gender.FEMALE)
-                .build();
-
-        userService.createUser(createUserRequest2);
-
-        List<User> users = userService.getAllUsers();
-        assertThat(users.size(), equalTo(2));
-
-        Room room = new Room();
-        room.setRoomNumber(3);
-        room.setRoomType(RoomType.FEMALE_WING);
-        AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, createUserRequest2.getEmail());
-
-
-        AssignRoomResponse assignRoomResponse = userService.assignRoom(assignRoomRequest);
-        assertThat(assignRoomResponse.getMessage(), is("room has been assigned"));
-
-    }
-
-    @Test
-    void testThatAdminUserCannotAssignRoomWhenRoomNumberIsExceeded(){
-        CreateUserRequest createUserRequest = CreateUserRequest.builder()
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
-                .gender(Gender.MALE)
-                .build();
-
-        userService.createUser(createUserRequest);
-
-        CreateUserRequest createUserRequest2 = CreateUserRequest.builder()
-                .firstName("gina")
-                .lastName("dimma")
-                .email("gina@gmail.com")
-                .password("ginagina")
-                .confirmPassword("ginagina")
-                .gender(Gender.FEMALE)
-                .build();
-
-        userService.createUser(createUserRequest2);
-
-        List<User> users = userService.getAllUsers();
-        assertThat(users.size(), equalTo(2));
-
-        Room room = new Room();
-        room.setRoomNumber(62);
-        room.setRoomType(RoomType.FEMALE_WING);
-        AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, createUserRequest2.getEmail());
-
-        assertThrows(RoomNumberDoesNotExistException.class,()-> userService.assignRoom(assignRoomRequest));
-
-    }
-
-    @Test
-    void testThatAdminUserCannotAssignRoomWhenRoomNumberIsBelow(){
-        CreateUserRequest createUserRequest = CreateUserRequest.builder()
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
-                .gender(Gender.MALE)
-                .build();
-
-        userService.createUser(createUserRequest);
-
-        CreateUserRequest createUserRequest2 = CreateUserRequest.builder()
-                .firstName("gina")
-                .lastName("dimma")
-                .email("gina@gmail.com")
-                .password("ginagina")
-                .confirmPassword("ginagina")
-                .gender(Gender.FEMALE)
-                .build();
-
-        userService.createUser(createUserRequest2);
-
-        List<User> users = userService.getAllUsers();
-        assertThat(users.size(), equalTo(2));
-
-        Room room = new Room();
-        room.setRoomNumber(0);
-        room.setRoomType(RoomType.FEMALE_WING);
-        AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, createUserRequest2.getEmail());
-
-        assertThrows(RoomNumberDoesNotExistException.class,()-> userService.assignRoom(assignRoomRequest));
-
-    }
 
 
     @AfterEach

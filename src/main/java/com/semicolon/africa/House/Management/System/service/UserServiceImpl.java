@@ -1,19 +1,10 @@
 package com.semicolon.africa.House.Management.System.service;
 
-
-import com.semicolon.africa.House.Management.System.data.models.Room;
-import com.semicolon.africa.House.Management.System.data.models.RoomType;
 import com.semicolon.africa.House.Management.System.data.models.User;
-import com.semicolon.africa.House.Management.System.data.repository.RoomRepository;
 import com.semicolon.africa.House.Management.System.data.repository.UserRepository;
 import com.semicolon.africa.House.Management.System.dtos.UserDto;
-import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
-import com.semicolon.africa.House.Management.System.dtos.request.CreateUserRequest;
-import com.semicolon.africa.House.Management.System.dtos.response.AssignRoomResponse;
-import com.semicolon.africa.House.Management.System.exception.EmailAlreadyExistsException;
-import com.semicolon.africa.House.Management.System.exception.PasswordMustMatchException;
-import com.semicolon.africa.House.Management.System.exception.RoomNumberDoesNotExistException;
-import com.semicolon.africa.House.Management.System.exception.UserNotFoundException;
+import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
+import com.semicolon.africa.House.Management.System.exception.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,30 +13,30 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
+
+
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private RoomRepository roomRepository;
 
-private ModelMapper mapper = new ModelMapper();
+    private ModelMapper mapper = new ModelMapper();
 
 
     @Override
-    public UserDto createUser(CreateUserRequest createUserRequest) {
-        if(emailAlreadyExists(createUserRequest.getEmail())){
+    public UserDto bookRoom(BookRoomRequest bookRoomRequest) {
+        if(emailAlreadyExists(bookRoomRequest.getEmail())){
             throw new EmailAlreadyExistsException("email already exist");
         }
-        if(!createUserRequest.getPassword().matches(createUserRequest.getConfirmPassword())){
+        if(!bookRoomRequest.getPassword().matches(bookRoomRequest.getConfirmPassword())){
             throw new PasswordMustMatchException("passwords must match");
         }
         User user = User.builder()
-                .firstName(createUserRequest.getFirstName())
-                .lastName(createUserRequest.getLastName())
-                .email(createUserRequest.getEmail())
-                .password(createUserRequest.getPassword())
-                .confirmPassword(createUserRequest.getConfirmPassword())
-                .gender(createUserRequest.getGender())
+                .firstName(bookRoomRequest.getFirstName())
+                .lastName(bookRoomRequest.getLastName())
+                .email(bookRoomRequest.getEmail())
+                .password(bookRoomRequest.getPassword())
+                .confirmPassword(bookRoomRequest.getConfirmPassword())
+                .gender(bookRoomRequest.getGender())
                 .build();
 
          userRepository.save(user);
@@ -67,30 +58,5 @@ private ModelMapper mapper = new ModelMapper();
         userRepository.deleteAll();
     }
 
-    @Override
-    public AssignRoomResponse assignRoom(AssignRoomRequest assignRoomRequest) {
 
-        User user = userRepository.findByEmail(assignRoomRequest.getNewOccupantEmail()).orElseThrow(()-> new UserNotFoundException("user not found"));
-
-        if(assignRoomRequest.getRoom().getRoomNumber() > 60){
-
-            throw new RoomNumberDoesNotExistException("room not available");
-        }
-
-        if(assignRoomRequest.getRoom().getRoomNumber() < 1){
-            throw new RoomNumberDoesNotExistException("room not available");
-        }
-        Room room = new Room();
-        room.setEmail(user.getEmail());
-        room.setRoomNumber(34);
-        room.setRoomType(RoomType.FEMALE_WING);
-
-        roomRepository.save(room);
-
-        AssignRoomResponse assignRoomResponse = new AssignRoomResponse();
-        assignRoomResponse.setMessage("room has been assigned");
-
-
-        return assignRoomResponse;
-    }
 }

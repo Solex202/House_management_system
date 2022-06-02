@@ -9,20 +9,16 @@ import javax.validation.constraints.Email;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@RequiredArgsConstructor
 public class Room {
 
     @Id
     private int roomNumber;
-    private final int TOTAL_ROOMS = 60;
     private RoomType roomType;
     @Email
     private String email;
 
     public Room(int roomNumber, RoomType type) {
-//        if(roomNumber > TOTAL_ROOMS){
-//
-//        }
+
         this.roomNumber = roomNumber;
         this.roomType = type;
 

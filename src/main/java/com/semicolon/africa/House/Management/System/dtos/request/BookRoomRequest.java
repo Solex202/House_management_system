@@ -17,7 +17,7 @@ import javax.validation.constraints.Min;
 @NoArgsConstructor
 @AllArgsConstructor
 @Validated
-public class CreateUserRequest {
+public class BookRoomRequest {
 
     private String firstName;
     private String lastName;
@@ -29,7 +29,4 @@ public class CreateUserRequest {
     private String confirmPassword;
 
     private Gender gender;
-    private Room room;
-
-
 }

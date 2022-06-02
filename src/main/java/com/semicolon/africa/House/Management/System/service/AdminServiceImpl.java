@@ -26,7 +26,7 @@ public class AdminServiceImpl implements AdminService {
     private RoomRepository roomRepository;
 
     @Override
-    public AssignRoomResponse assignRoom(AssignRoomRequest assignRoomRequest) {
+    public String assignRoom(AssignRoomRequest assignRoomRequest) {
 
         User user = userRepository.findByEmail(assignRoomRequest.getNewOccupantEmail()).orElseThrow(()-> new UserNotFoundException("user not found"));
 
@@ -51,9 +51,6 @@ public class AdminServiceImpl implements AdminService {
 
         roomRepository.save(room);
 
-        AssignRoomResponse assignRoomResponse = new AssignRoomResponse();
-        assignRoomResponse.setMessage("room has been assigned");
-
-        return assignRoomResponse;
+        return "room has been assigned";
     }
 }

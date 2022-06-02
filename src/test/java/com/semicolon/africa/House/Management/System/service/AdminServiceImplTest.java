@@ -68,9 +68,8 @@ class AdminServiceImplTest {
         room.setRoomType(RoomType.FEMALE_WING);
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
 
-
-        AssignRoomResponse assignRoomResponse = adminService.assignRoom(assignRoomRequest);
-        assertThat(assignRoomResponse.getMessage(), is("room has been assigned"));
+        String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
+        assertThat(assignRoomResponse, is("room has been assigned"));
 
     }
 
@@ -189,8 +188,8 @@ class AdminServiceImplTest {
         room.setRoomType(RoomType.FEMALE_WING);
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
 
-        AssignRoomResponse assignRoomResponse = adminService.assignRoom(assignRoomRequest);
-        assertThat(assignRoomResponse.getMessage(), is("room has been assigned"));
+        String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
+        assertThat(assignRoomResponse, is("room has been assigned"));
 
     }
 
