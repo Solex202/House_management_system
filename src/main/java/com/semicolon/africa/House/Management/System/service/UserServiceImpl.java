@@ -13,6 +13,7 @@ import com.semicolon.africa.House.Management.System.dtos.request.CreateUserReque
 import com.semicolon.africa.House.Management.System.dtos.response.AssignRoomResponse;
 import com.semicolon.africa.House.Management.System.exception.EmailAlreadyExistsException;
 import com.semicolon.africa.House.Management.System.exception.PasswordMustMatchException;
+import com.semicolon.africa.House.Management.System.exception.RoomNumberDoesNotExistException;
 import com.semicolon.africa.House.Management.System.exception.UserNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,11 @@ private ModelMapper mapper = new ModelMapper();
 
         User user = userRepository.findByEmail(assignRoomRequest.getNewOccupantEmail()).orElseThrow(()-> new UserNotFoundException("user not found"));
 
+        if(assignRoomRequest.getRoom().getRoomNumber() > 60){
+
+            throw new RoomNumberDoesNotExistException("room not available");
+
+        }
         Room room = new Room();
         room.setEmail(user.getEmail());
         room.setRoomNumber(34);
@@ -83,9 +89,6 @@ private ModelMapper mapper = new ModelMapper();
         AssignRoomResponse assignRoomResponse = new AssignRoomResponse();
         assignRoomResponse.setMessage("room has been assigned");
 
-//        if(user.getGender().equals(Gender.MALE) && assignRoomRequest.getRoom().getRoomNumber() > 60){
-//
-//        }
 
         return assignRoomResponse;
     }

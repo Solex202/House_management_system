@@ -9,6 +9,7 @@ import com.semicolon.africa.House.Management.System.dtos.request.CreateUserReque
 import com.semicolon.africa.House.Management.System.dtos.response.AssignRoomResponse;
 import com.semicolon.africa.House.Management.System.exception.EmailAlreadyExistsException;
 import com.semicolon.africa.House.Management.System.exception.PasswordMustMatchException;
+import com.semicolon.africa.House.Management.System.exception.RoomNumberDoesNotExistException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -127,6 +128,44 @@ class UserServiceImplTest {
 
         AssignRoomResponse assignRoomResponse = userService.assignRoom(assignRoomRequest);
         assertThat(assignRoomResponse.getMessage(), is("room has been assigned"));
+
+    }
+
+    @Test
+    void testThatAdminUserCannotAssignRoomWhenRoomNumberIsExceeded(){
+        CreateUserRequest createUserRequest = CreateUserRequest.builder()
+                .firstName("lota")
+                .lastName("solomon")
+                .email("lota@gmail.com")
+                .password("lota123")
+                .confirmPassword("lota123")
+                .gender(Gender.MALE)
+                .build();
+
+        userService.createUser(createUserRequest);
+
+        CreateUserRequest createUserRequest2 = CreateUserRequest.builder()
+                .firstName("gina")
+                .lastName("dimma")
+                .email("gina@gmail.com")
+                .password("ginagina")
+                .confirmPassword("ginagina")
+                .gender(Gender.FEMALE)
+                .build();
+
+        userService.createUser(createUserRequest2);
+
+        List<User> users = userService.getAllUsers();
+        assertThat(users.size(), equalTo(2));
+
+        Room room = new Room();
+        room.setRoomNumber(62);
+        room.setRoomType(RoomType.FEMALE_WING);
+        AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, createUserRequest2.getEmail());
+
+        assertThrows(RoomNumberDoesNotExistException.class,()-> userService.assignRoom(assignRoomRequest));
+
+
 
     }
 
