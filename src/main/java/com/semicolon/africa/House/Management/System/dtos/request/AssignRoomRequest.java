@@ -6,10 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AssignRoomRequest {
-    private String admin;
     private Room room;
-    private String newOccupant;}
+    @Email
+    private String newOccupantEmail;}
