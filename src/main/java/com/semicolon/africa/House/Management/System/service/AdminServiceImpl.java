@@ -3,7 +3,6 @@ package com.semicolon.africa.House.Management.System.service;
 
 import com.semicolon.africa.House.Management.System.data.models.Gender;
 import com.semicolon.africa.House.Management.System.data.models.Room;
-import com.semicolon.africa.House.Management.System.data.models.RoomType;
 import com.semicolon.africa.House.Management.System.data.models.User;
 import com.semicolon.africa.House.Management.System.data.repository.RoomRepository;
 import com.semicolon.africa.House.Management.System.data.repository.UserRepository;
@@ -30,15 +29,15 @@ public class AdminServiceImpl implements AdminService {
         User user = userRepository.findByEmail(assignRoomRequest.getNewOccupantEmail()).orElseThrow(()-> new UserNotFoundException("user not found"));
 
         if(assignRoomRequest.getRoom().getRoomNumber() > 60 || assignRoomRequest.getRoom().getRoomNumber() < 1){
-            throw new RoomNumberDoesNotExistException("room %d not available");
+            throw new RoomNumberDoesNotExistException("room " + assignRoomRequest.getRoom().getRoomNumber() +" not available");
         }
 
         if(user.getGender().equals(Gender.FEMALE) && (assignRoomRequest.getRoom().getRoomNumber() > 30 || assignRoomRequest.getRoom().getRoomNumber() < 1)){
 
-            throw new MaleWingException("cannot add female to male wing");
+            throw new MaleWingException("cannot add "+ user.getEmail()+" to male wing");
         }
         if(user.getGender().equals(Gender.MALE) && (assignRoomRequest.getRoom().getRoomNumber() < 30 || assignRoomRequest.getRoom().getRoomNumber() > 60)){
-            throw new FemaleWingException("cannot add male to female wing");
+            throw new FemaleWingException("cannot add "+user.getEmail()+"  to female wing");
         }
         Room room = new Room();
         room.setEmail(user.getEmail());
