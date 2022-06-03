@@ -43,7 +43,7 @@ public class AdminServiceImpl implements AdminService {
         Room room = new Room();
         room.setEmail(user.getEmail());
         room.setRoomNumber(assignRoomRequest.getRoom().getRoomNumber());
-        room.setRoomType(RoomType.FEMALE_ROOM);
+        room.setRoomType(assignRoomRequest.getRoom().getRoomType());
 
         roomRepository.save(room);
 

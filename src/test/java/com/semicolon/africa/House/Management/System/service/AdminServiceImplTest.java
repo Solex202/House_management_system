@@ -71,7 +71,6 @@ class AdminServiceImplTest {
 
         String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
         assertThat(assignRoomResponse, is("room successfully assigned"));
-
     }
 
     @Test
@@ -107,7 +106,6 @@ class AdminServiceImplTest {
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
 
         assertThrows(MaleWingException.class, ()-> adminService.assignRoom(assignRoomRequest));
-
     }
 
     @Test
@@ -143,10 +141,7 @@ class AdminServiceImplTest {
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest.getEmail());
 
         assertThrows(FemaleWingException.class, ()-> adminService.assignRoom(assignRoomRequest));
-
     }
-
-
 
     @Test
     void testThatAdminUserCannotAssignRoomWhenRoomNumberIsExceeded_throwException(){
@@ -181,7 +176,6 @@ class AdminServiceImplTest {
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
 
         assertThrows(RoomNumberDoesNotExistException.class,()-> adminService.assignRoom(assignRoomRequest));
-
     }
 
     @Test
@@ -264,13 +258,10 @@ class AdminServiceImplTest {
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
 
         String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
-        assertThat(assignRoomResponse, is("room has been assigned"));
+        assertThat(assignRoomResponse, is("room successfully assigned"));
 
         adminService.evictTenant(bookRoomRequest2.getEmail());
-
-
     }
-
 
     @AfterEach
     void tearDown() {

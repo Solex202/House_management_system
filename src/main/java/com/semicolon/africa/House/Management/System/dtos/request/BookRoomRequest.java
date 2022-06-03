@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
@@ -18,7 +19,8 @@ import javax.validation.constraints.Min;
 @AllArgsConstructor
 @Validated
 public class BookRoomRequest {
-
+    @Id
+    private String id;
     private String firstName;
     private String lastName;
     @Email
@@ -27,6 +29,5 @@ public class BookRoomRequest {
     private String password;
     @Min(6)
     private String confirmPassword;
-
     private Gender gender;
 }
