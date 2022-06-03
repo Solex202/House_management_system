@@ -4,4 +4,6 @@ import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomReque
 
 public interface AdminService {
     String assignRoom(AssignRoomRequest assignRoomRequest);
+
+    void evictTenant(String email);
 }

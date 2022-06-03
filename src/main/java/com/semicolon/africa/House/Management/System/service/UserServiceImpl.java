@@ -14,10 +14,8 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService{
 
-
     @Autowired
     private UserRepository userRepository;
-
 
     private ModelMapper mapper = new ModelMapper();
 
@@ -57,6 +55,5 @@ public class UserServiceImpl implements UserService{
     public void deleteAll() {
         userRepository.deleteAll();
     }
-
 
 }

@@ -1,6 +1,5 @@
 package com.semicolon.africa.House.Management.System.controller;
 
-
 import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.response.ApiResponse;
 import com.semicolon.africa.House.Management.System.exception.EmailAlreadyExistsException;

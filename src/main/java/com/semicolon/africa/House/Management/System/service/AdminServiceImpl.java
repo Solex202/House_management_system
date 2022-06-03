@@ -8,7 +8,6 @@ import com.semicolon.africa.House.Management.System.data.models.User;
 import com.semicolon.africa.House.Management.System.data.repository.RoomRepository;
 import com.semicolon.africa.House.Management.System.data.repository.UserRepository;
 import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
-import com.semicolon.africa.House.Management.System.dtos.response.AssignRoomResponse;
 import com.semicolon.africa.House.Management.System.exception.FemaleWingException;
 import com.semicolon.africa.House.Management.System.exception.MaleWingException;
 import com.semicolon.africa.House.Management.System.exception.RoomNumberDoesNotExistException;
@@ -30,27 +29,29 @@ public class AdminServiceImpl implements AdminService {
 
         User user = userRepository.findByEmail(assignRoomRequest.getNewOccupantEmail()).orElseThrow(()-> new UserNotFoundException("user not found"));
 
-        if(assignRoomRequest.getRoom().getRoomNumber() > 60){
-            throw new RoomNumberDoesNotExistException("room not available");
-        }
-
-        if(assignRoomRequest.getRoom().getRoomNumber() < 1){
-            throw new RoomNumberDoesNotExistException("room not available");
+        if(assignRoomRequest.getRoom().getRoomNumber() > 60 || assignRoomRequest.getRoom().getRoomNumber() < 1){
+            throw new RoomNumberDoesNotExistException("room %d not available");
         }
 
         if(user.getGender().equals(Gender.FEMALE) && (assignRoomRequest.getRoom().getRoomNumber() > 30 || assignRoomRequest.getRoom().getRoomNumber() < 1)){
-            throw new FemaleWingException("cannot add female to male wing");
+
+            throw new MaleWingException("cannot add female to male wing");
         }
         if(user.getGender().equals(Gender.MALE) && (assignRoomRequest.getRoom().getRoomNumber() < 30 || assignRoomRequest.getRoom().getRoomNumber() > 60)){
-            throw new MaleWingException("cannot add male to female wing");
+            throw new FemaleWingException("cannot add male to female wing");
         }
         Room room = new Room();
         room.setEmail(user.getEmail());
-        room.setRoomNumber(34);
-        room.setRoomType(RoomType.FEMALE_WING);
+        room.setRoomNumber(assignRoomRequest.getRoom().getRoomNumber());
+        room.setRoomType(RoomType.FEMALE_ROOM);
 
         roomRepository.save(room);
 
-        return "room has been assigned";
+        return "room successfully assigned";
+    }
+
+    @Override
+    public void evictTenant(String email) {
+
     }
 }

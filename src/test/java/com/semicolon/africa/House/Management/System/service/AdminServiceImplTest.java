@@ -6,7 +6,8 @@ import com.semicolon.africa.House.Management.System.data.models.RoomType;
 import com.semicolon.africa.House.Management.System.data.models.User;
 import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
-import com.semicolon.africa.House.Management.System.dtos.response.AssignRoomResponse;
+import com.semicolon.africa.House.Management.System.exception.FemaleWingException;
+import com.semicolon.africa.House.Management.System.exception.MaleWingException;
 import com.semicolon.africa.House.Management.System.exception.RoomNumberDoesNotExistException;
 import com.semicolon.africa.House.Management.System.exception.UserNotFoundException;
 import org.junit.jupiter.api.AfterEach;
@@ -65,13 +66,87 @@ class AdminServiceImplTest {
 
         Room room = new Room();
         room.setRoomNumber(3);
-        room.setRoomType(RoomType.FEMALE_WING);
+        room.setRoomType(RoomType.FEMALE_ROOM);
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
 
         String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
-        assertThat(assignRoomResponse, is("room has been assigned"));
+        assertThat(assignRoomResponse, is("room successfully assigned"));
 
     }
+
+    @Test
+    void testThatAdminUserCannotAssignFemaleToMAleRoom(){
+        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
+                .firstName("lota")
+                .lastName("solomon")
+                .email("lota@gmail.com")
+                .password("lota123")
+                .confirmPassword("lota123")
+                .gender(Gender.MALE)
+                .build();
+
+        userService.bookRoom(bookRoomRequest);
+
+        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
+                .firstName("gina")
+                .lastName("dimma")
+                .email("gina@gmail.com")
+                .password("ginagina")
+                .confirmPassword("ginagina")
+                .gender(Gender.FEMALE)
+                .build();
+
+        userService.bookRoom(bookRoomRequest2);
+
+        List<User> users = userService.getAllUsers();
+        assertThat(users.size(), equalTo(2));
+
+        Room room = new Room();
+        room.setRoomNumber(37);
+        room.setRoomType(RoomType.FEMALE_ROOM);
+        AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
+
+        assertThrows(MaleWingException.class, ()-> adminService.assignRoom(assignRoomRequest));
+
+    }
+
+    @Test
+    void testThatAdminUserCannotAssignMaleToFemaleRoom(){
+        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
+                .firstName("lota")
+                .lastName("solomon")
+                .email("lota@gmail.com")
+                .password("lota123")
+                .confirmPassword("lota123")
+                .gender(Gender.MALE)
+                .build();
+
+        userService.bookRoom(bookRoomRequest);
+
+        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
+                .firstName("gina")
+                .lastName("dimma")
+                .email("gina@gmail.com")
+                .password("ginagina")
+                .confirmPassword("ginagina")
+                .gender(Gender.FEMALE)
+                .build();
+
+        userService.bookRoom(bookRoomRequest2);
+
+        List<User> users = userService.getAllUsers();
+        assertThat(users.size(), equalTo(2));
+
+        Room room = new Room();
+        room.setRoomNumber(7);
+        room.setRoomType(RoomType.MALE_ROOM);
+        AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest.getEmail());
+
+        assertThrows(FemaleWingException.class, ()-> adminService.assignRoom(assignRoomRequest));
+
+    }
+
+
 
     @Test
     void testThatAdminUserCannotAssignRoomWhenRoomNumberIsExceeded_throwException(){
@@ -102,7 +177,7 @@ class AdminServiceImplTest {
 
         Room room = new Room();
         room.setRoomNumber(62);
-        room.setRoomType(RoomType.FEMALE_WING);
+        room.setRoomType(RoomType.FEMALE_ROOM);
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
 
         assertThrows(RoomNumberDoesNotExistException.class,()-> adminService.assignRoom(assignRoomRequest));
@@ -138,7 +213,7 @@ class AdminServiceImplTest {
 
         Room room = new Room();
         room.setRoomNumber(-2);
-        room.setRoomType(RoomType.FEMALE_WING);
+        room.setRoomType(RoomType.FEMALE_ROOM);
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
 
         assertThrows(RoomNumberDoesNotExistException.class,()-> adminService.assignRoom(assignRoomRequest));
@@ -149,7 +224,7 @@ class AdminServiceImplTest {
     void testThatAdminUserCannotAssignRoomWhenUserIsNotInDatabase_throwException(){
         Room room = new Room();
         room.setRoomNumber(7);
-        room.setRoomType(RoomType.FEMALE_WING);
+        room.setRoomType(RoomType.FEMALE_ROOM);
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, "chioma@gmail.com");
 
         assertThrows(UserNotFoundException.class,()-> adminService.assignRoom(assignRoomRequest));
@@ -185,11 +260,14 @@ class AdminServiceImplTest {
 
         Room room = new Room();
         room.setRoomNumber(2);
-        room.setRoomType(RoomType.FEMALE_WING);
+        room.setRoomType(RoomType.FEMALE_ROOM);
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
 
         String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
         assertThat(assignRoomResponse, is("room has been assigned"));
+
+        adminService.evictTenant(bookRoomRequest2.getEmail());
+
 
     }
 
