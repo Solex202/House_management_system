@@ -36,6 +36,7 @@ class UserServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
+                .isMadePayment(true)
                 .build();
 
         userService.bookRoom(bookRoomRequest);

@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService{
                 .password(bookRoomRequest.getPassword())
                 .confirmPassword(bookRoomRequest.getConfirmPassword())
                 .gender(bookRoomRequest.getGender())
+                .isMadePayment(bookRoomRequest.isMadePayment())
                 .build();
 
          userRepository.save(user);

@@ -7,6 +7,7 @@ import com.semicolon.africa.House.Management.System.data.models.User;
 import com.semicolon.africa.House.Management.System.data.repository.RoomRepository;
 import com.semicolon.africa.House.Management.System.data.repository.UserRepository;
 import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
+import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
 import com.semicolon.africa.House.Management.System.exception.FemaleWingException;
 import com.semicolon.africa.House.Management.System.exception.MaleWingException;
 import com.semicolon.africa.House.Management.System.exception.RoomNumberDoesNotExistException;
@@ -22,6 +23,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private RoomRepository roomRepository;
+
+//    @Autowired
+//    public AdminServiceImpl(UserRepository userRepository, RoomRepository roomRepository){
+//        this.userRepository = userRepository;
+//        this.roomRepository = roomRepository;
+//    }
 
     @Override
     public String assignRoom(AssignRoomRequest assignRoomRequest) {
@@ -39,18 +46,23 @@ public class AdminServiceImpl implements AdminService {
         if(user.getGender().equals(Gender.MALE) && (assignRoomRequest.getRoom().getRoomNumber() < 30 || assignRoomRequest.getRoom().getRoomNumber() > 60)){
             throw new FemaleWingException("cannot add "+user.getEmail()+"  to female wing");
         }
+
         Room room = new Room();
         room.setEmail(user.getEmail());
         room.setRoomNumber(assignRoomRequest.getRoom().getRoomNumber());
         room.setRoomType(assignRoomRequest.getRoom().getRoomType());
 
         roomRepository.save(room);
+//        userRepository.save(user);
 
         return "room successfully assigned";
     }
 
     @Override
     public void evictTenant(String email) {
+
+        User user = userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException("user not found"));
+        userRepository.delete(user);
 
     }
 }

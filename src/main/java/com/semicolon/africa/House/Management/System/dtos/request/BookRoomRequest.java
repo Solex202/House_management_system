@@ -30,4 +30,5 @@ public class BookRoomRequest {
     @Min(6)
     private String confirmPassword;
     private Gender gender;
+    private boolean isMadePayment;
 }

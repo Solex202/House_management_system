@@ -4,6 +4,8 @@ import com.semicolon.africa.House.Management.System.data.models.Gender;
 import com.semicolon.africa.House.Management.System.data.models.Room;
 import com.semicolon.africa.House.Management.System.data.models.RoomType;
 import com.semicolon.africa.House.Management.System.data.models.User;
+import com.semicolon.africa.House.Management.System.data.repository.RoomRepository;
+import com.semicolon.africa.House.Management.System.data.repository.UserRepository;
 import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
 import com.semicolon.africa.House.Management.System.exception.FemaleWingException;
@@ -26,15 +28,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataMongoTest
 class AdminServiceImplTest {
-    @Autowired
-    private AdminService adminService;
 
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    RoomRepository roomRepository;
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AdminService adminService;
+
     @BeforeEach
     void setUp() {
+//        adminService = new AdminServiceImpl(userRepository, roomRepository);
     }
 
     @Test
@@ -261,6 +271,10 @@ class AdminServiceImplTest {
         assertThat(assignRoomResponse, is("room successfully assigned"));
 
         adminService.evictTenant(bookRoomRequest2.getEmail());
+
+        List<User> users2 = userService.getAllUsers();
+        assertThat(users2.size(), equalTo(1));
+
     }
 
     @AfterEach

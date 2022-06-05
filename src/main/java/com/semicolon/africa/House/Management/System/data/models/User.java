@@ -30,6 +30,5 @@ public class User {
     private String confirmPassword;
 
     private Gender gender;
-//    private Room room;
-//    private Set<Role> roles;
+    private boolean isMadePayment;
 }
