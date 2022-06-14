@@ -55,7 +55,7 @@ public class UserController {
 
             return  new ResponseEntity<>(response, HttpStatus.OK);
 
-        }catch (RoomNumberDoesNotExistException | MaleWingException | FemaleWingException ex){
+        }catch (RoomNumberDoesNotExistException | MaleWingException | FemaleWingException | PaymentException ex){
             ApiResponse response = ApiResponse
                     .builder()
                     .message(ex.getMessage())

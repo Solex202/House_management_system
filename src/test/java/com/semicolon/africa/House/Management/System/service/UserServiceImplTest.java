@@ -1,9 +1,11 @@
 package com.semicolon.africa.House.Management.System.service;
 
 import com.semicolon.africa.House.Management.System.data.models.Gender;
+import com.semicolon.africa.House.Management.System.data.models.Payment;
 import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
 import com.semicolon.africa.House.Management.System.exception.EmailAlreadyExistsException;
 import com.semicolon.africa.House.Management.System.exception.PasswordMustMatchException;
+import com.semicolon.africa.House.Management.System.exception.PaymentException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,12 +38,28 @@ class UserServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
-                .isMadePayment(true)
+                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
 
         assertThat(userService.getAllUsers().size(), is(1));
+    }
+
+    @Test
+    void testThatUserCannotBookRoomIfPaymentHasNotBeenMade_throwException(){
+        //given
+        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
+                .firstName("lota")
+                .lastName("solomon")
+                .email("lota@gmail.com")
+                .password("lota123")
+                .confirmPassword("lota123")
+                .gender(Gender.MALE)
+//                .makePayment()
+                .build();
+
+        assertThrows(PaymentException.class,()-> userService.bookRoom(bookRoomRequest));
     }
 
     @Test
@@ -69,6 +87,7 @@ class UserServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
+                .makePayment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -89,4 +108,4 @@ class UserServiceImplTest {
     void tearDown() {
         userService.deleteAll();
     }
-};
+}

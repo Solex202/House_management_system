@@ -53,7 +53,6 @@ class AdminServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
-                .isMadePayment(true)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -64,7 +63,6 @@ class AdminServiceImplTest {
                 .email("gina@gmail.com")
                 .password("ginagina")
                 .confirmPassword("ginagina")
-                .isMadePayment(true)
                 .gender(Gender.FEMALE)
                 .build();
 
@@ -82,8 +80,48 @@ class AdminServiceImplTest {
         assertThat(assignRoomResponse, is("room successfully assigned"));
     }
 
+//    @Test
+//    void testThatAdminUserCannotAssignRoomIfUserHasNotMadePayment(){
+//        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
+//                .firstName("lota")
+//                .lastName("solomon")
+//                .email("lota@gmail.com")
+//                .password("lota123")
+//                .confirmPassword("lota123")
+//                .gender(Gender.MALE)
+//                .isMadePayment(true)
+//                .build();
+//
+//        userService.bookRoom(bookRoomRequest);
+//
+//        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
+//                .firstName("gina")
+//                .lastName("dimma")
+//                .email("gina@gmail.com")
+//                .password("ginagina")
+//                .confirmPassword("ginagina")
+//                .isMadePayment(false)
+//                .gender(Gender.FEMALE)
+//                .build();
+//
+//        userService.bookRoom(bookRoomRequest2);
+//
+//        List<User> users = userService.getAllUsers();
+//        assertThat(users.size(), equalTo(2));
+//
+//        Room room = new Room();
+//        room.setRoomNumber(3);
+//        room.setRoomType(RoomType.FEMALE_ROOM);
+//        AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
+//
+////        String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
+////        assertThat(assignRoomResponse, is("room successfully assigned"));
+//
+//        assertThrows(PaymentException.class, ()->adminService.assignRoom(assignRoomRequest));
+//    }
+
     @Test
-    void testThatAdminUserCannotAssignRoomIfUserHasNotMadePayment(){
+    void testThatAdminUserCannotAssignFemaleToMAleRoom_throwException(){
         BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
                 .firstName("lota")
                 .lastName("solomon")
@@ -91,7 +129,6 @@ class AdminServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
-                .isMadePayment(true)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -102,47 +139,6 @@ class AdminServiceImplTest {
                 .email("gina@gmail.com")
                 .password("ginagina")
                 .confirmPassword("ginagina")
-                .isMadePayment(false)
-                .gender(Gender.FEMALE)
-                .build();
-
-        userService.bookRoom(bookRoomRequest2);
-
-        List<User> users = userService.getAllUsers();
-        assertThat(users.size(), equalTo(2));
-
-        Room room = new Room();
-        room.setRoomNumber(3);
-        room.setRoomType(RoomType.FEMALE_ROOM);
-        AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
-
-//        String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
-//        assertThat(assignRoomResponse, is("room successfully assigned"));
-
-        assertThrows(PaymentException.class, ()->adminService.assignRoom(assignRoomRequest));
-    }
-
-    @Test
-    void testThatAdminUserCannotAssignFemaleToMAleRoom(){
-        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
-                .isMadePayment(true)
-                .gender(Gender.MALE)
-                .build();
-
-        userService.bookRoom(bookRoomRequest);
-
-        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
-                .firstName("gina")
-                .lastName("dimma")
-                .email("gina@gmail.com")
-                .password("ginagina")
-                .confirmPassword("ginagina")
-                .isMadePayment(true)
                 .gender(Gender.FEMALE)
                 .build();
 
@@ -160,14 +156,13 @@ class AdminServiceImplTest {
     }
 
     @Test
-    void testThatAdminUserCannotAssignMaleToFemaleRoom(){
+    void testThatAdminUserCannotAssignMaleToFemaleRoom_throwException(){
         BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
                 .password("lota123")
                 .confirmPassword("lota123")
-                .isMadePayment(true)
                 .gender(Gender.MALE)
                 .build();
 
@@ -179,7 +174,6 @@ class AdminServiceImplTest {
                 .email("gina@gmail.com")
                 .password("ginagina")
                 .confirmPassword("ginagina")
-                .isMadePayment(true)
                 .gender(Gender.FEMALE)
                 .build();
 
@@ -204,7 +198,6 @@ class AdminServiceImplTest {
                 .email("lota@gmail.com")
                 .password("lota123")
                 .confirmPassword("lota123")
-                .isMadePayment(true)
                 .gender(Gender.MALE)
                 .build();
 
@@ -216,7 +209,6 @@ class AdminServiceImplTest {
                 .email("gina@gmail.com")
                 .password("ginagina")
                 .confirmPassword("ginagina")
-                .isMadePayment(true)
                 .gender(Gender.FEMALE)
                 .build();
 
@@ -234,14 +226,13 @@ class AdminServiceImplTest {
     }
 
     @Test
-    void testThatAdminUserCannotAssignRoomWhenRoomNumberIsBelow(){
+    void testThatAdminUserCannotAssignRoomWhenRoomNumberIsBelow_throwException(){
         BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
                 .password("lota123")
                 .confirmPassword("lota123")
-                .isMadePayment(true)
                 .gender(Gender.MALE)
                 .build();
 
@@ -253,7 +244,6 @@ class AdminServiceImplTest {
                 .email("gina@gmail.com")
                 .password("ginagina")
                 .confirmPassword("ginagina")
-                .isMadePayment(true)
                 .gender(Gender.FEMALE)
                 .build();
 
@@ -290,7 +280,6 @@ class AdminServiceImplTest {
                 .email("lota@gmail.com")
                 .password("lota123")
                 .confirmPassword("lota123")
-                .isMadePayment(true)
                 .gender(Gender.MALE)
                 .build();
 
@@ -302,7 +291,6 @@ class AdminServiceImplTest {
                 .email("gina@gmail.com")
                 .password("ginagina")
                 .confirmPassword("ginagina")
-                .isMadePayment(true)
                 .gender(Gender.FEMALE)
                 .build();
 

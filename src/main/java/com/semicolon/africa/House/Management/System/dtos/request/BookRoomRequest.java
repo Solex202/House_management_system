@@ -1,6 +1,7 @@
 package com.semicolon.africa.House.Management.System.dtos.request;
 
 import com.semicolon.africa.House.Management.System.data.models.Gender;
+import com.semicolon.africa.House.Management.System.data.models.Payment;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.validation.annotation.Validated;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 //@RequiredArgsConstructor
 @Validated
@@ -27,18 +28,11 @@ public class BookRoomRequest {
     @Min(6)
     private String confirmPassword;
     private Gender gender;
-    private boolean isMadePayment;
+    private Payment makePayment;
     private LocalDateTime localDateTime;
 
-//    public BookRoomRequest(String firstName, String lastName, String email, String password, String confirmPassword, Gender gender, boolean isMadePayment){
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.email = email;
-//        this.password = password;
-//        this.confirmPassword = confirmPassword;
-//        this.gender = gender;
-//        this.isMadePayment = isMadePayment;
-//        this.localDateTime = LocalDateTime.now();
-//    }
+    public BookRoomRequest(){
+        this.localDateTime = LocalDateTime.now();
+    }
 
 }

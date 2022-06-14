@@ -23,10 +23,14 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDto bookRoom(BookRoomRequest bookRoomRequest) {
         if(emailAlreadyExists(bookRoomRequest.getEmail())){
-            throw new EmailAlreadyExistsException("email already exist");
+            throw new EmailAlreadyExistsException("Email already exist");
         }
         if(!bookRoomRequest.getPassword().matches(bookRoomRequest.getConfirmPassword())){
-            throw new PasswordMustMatchException("passwords must match");
+            throw new PasswordMustMatchException("Passwords must match");
+        }
+
+        if(bookRoomRequest.getMakePayment() == null){
+            throw new PaymentException("Please make payment");
         }
         User user = User.builder()
                 .firstName(bookRoomRequest.getFirstName())
@@ -35,9 +39,10 @@ public class UserServiceImpl implements UserService{
                 .password(bookRoomRequest.getPassword())
                 .confirmPassword(bookRoomRequest.getConfirmPassword())
                 .gender(bookRoomRequest.getGender())
-                .isMadePayment(bookRoomRequest.isMadePayment())
+                .makePayment(bookRoomRequest.getMakePayment())
                 .build();
 
+        user.setPaymentStatus(true);
          userRepository.save(user);
 
         return mapper.map(user, UserDto.class);

@@ -43,9 +43,9 @@ public class AdminServiceImpl implements AdminService {
         if(user.getGender().equals(Gender.MALE) && (assignRoomRequest.getRoom().getRoomNumber() < 30 || assignRoomRequest.getRoom().getRoomNumber() > 60)){
             throw new FemaleWingException("cannot add "+user.getEmail()+"  to female wing");
         }
-        if(!user.isMadePayment()){
-            throw new PaymentException( user.getEmail() +" has not made payment");
-        }
+//        if(!user.isMadePayment()){
+//            throw new PaymentException( user.getEmail() +" has not made payment");
+//        }
 
         Room room = new Room();
         room.setEmail(user.getEmail());
