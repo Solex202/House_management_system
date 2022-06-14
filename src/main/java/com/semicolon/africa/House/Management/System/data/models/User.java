@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -31,4 +32,5 @@ public class User {
 
     private Gender gender;
     private boolean isMadePayment;
+//    private LocalDateTime localDateTime;
 }

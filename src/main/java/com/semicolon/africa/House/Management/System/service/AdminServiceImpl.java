@@ -8,10 +8,7 @@ import com.semicolon.africa.House.Management.System.data.repository.RoomReposito
 import com.semicolon.africa.House.Management.System.data.repository.UserRepository;
 import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
-import com.semicolon.africa.House.Management.System.exception.FemaleWingException;
-import com.semicolon.africa.House.Management.System.exception.MaleWingException;
-import com.semicolon.africa.House.Management.System.exception.RoomNumberDoesNotExistException;
-import com.semicolon.africa.House.Management.System.exception.UserNotFoundException;
+import com.semicolon.africa.House.Management.System.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +43,9 @@ public class AdminServiceImpl implements AdminService {
         if(user.getGender().equals(Gender.MALE) && (assignRoomRequest.getRoom().getRoomNumber() < 30 || assignRoomRequest.getRoom().getRoomNumber() > 60)){
             throw new FemaleWingException("cannot add "+user.getEmail()+"  to female wing");
         }
+        if(!user.isMadePayment()){
+            throw new PaymentException( user.getEmail() +" has not made payment");
+        }
 
         Room room = new Room();
         room.setEmail(user.getEmail());
@@ -53,7 +53,6 @@ public class AdminServiceImpl implements AdminService {
         room.setRoomType(assignRoomRequest.getRoom().getRoomType());
 
         roomRepository.save(room);
-//        userRepository.save(user);
 
         return "room successfully assigned";
     }

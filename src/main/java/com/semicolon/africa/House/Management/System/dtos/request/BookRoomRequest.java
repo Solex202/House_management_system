@@ -1,22 +1,19 @@
 package com.semicolon.africa.House.Management.System.dtos.request;
 
 import com.semicolon.africa.House.Management.System.data.models.Gender;
-import com.semicolon.africa.House.Management.System.data.models.Room;
-import com.semicolon.africa.House.Management.System.dtos.response.AssignRoomResponse;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
 
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//@RequiredArgsConstructor
 @Validated
 public class BookRoomRequest {
     @Id
@@ -31,4 +28,17 @@ public class BookRoomRequest {
     private String confirmPassword;
     private Gender gender;
     private boolean isMadePayment;
+    private LocalDateTime localDateTime;
+
+//    public BookRoomRequest(String firstName, String lastName, String email, String password, String confirmPassword, Gender gender, boolean isMadePayment){
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.email = email;
+//        this.password = password;
+//        this.confirmPassword = confirmPassword;
+//        this.gender = gender;
+//        this.isMadePayment = isMadePayment;
+//        this.localDateTime = LocalDateTime.now();
+//    }
+
 }
