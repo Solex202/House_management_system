@@ -18,13 +18,13 @@ public class Room {
     private RoomType roomType;
     @Email
     private String email;
-    private List<User> user ;
+    private List<User> roomMembers = new ArrayList<>();
 
     public Room(int roomNumber, RoomType type) {
 
         this.roomNumber = roomNumber;
         this.roomType = type;
-        this.user = new ArrayList<>();
+//        this.roomMembers = new ArrayList<>();
 
     }
 

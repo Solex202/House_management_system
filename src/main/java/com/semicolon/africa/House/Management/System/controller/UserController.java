@@ -34,7 +34,7 @@ public class UserController {
                     .build();
 
             return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch (EmailAlreadyExistsException | PasswordMustMatchException ex) {
+        }catch (EmailAlreadyExistsException | PasswordMustMatchException | PaymentException ex) {
 
             ApiResponse response = ApiResponse.builder()
                     .message(ex.getMessage())

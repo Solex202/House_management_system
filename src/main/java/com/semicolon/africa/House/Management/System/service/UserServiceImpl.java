@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService{
         }
 
         if(bookRoomRequest.getMakePayment() == null){
-            throw new PaymentException("Please make payment");
+            throw new PaymentException("Cannot book room,please make payment");
         }
         User user = User.builder()
                 .firstName(bookRoomRequest.getFirstName())

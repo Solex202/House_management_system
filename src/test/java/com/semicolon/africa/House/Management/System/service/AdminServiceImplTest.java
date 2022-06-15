@@ -1,9 +1,6 @@
 package com.semicolon.africa.House.Management.System.service;
 
-import com.semicolon.africa.House.Management.System.data.models.Gender;
-import com.semicolon.africa.House.Management.System.data.models.Room;
-import com.semicolon.africa.House.Management.System.data.models.RoomType;
-import com.semicolon.africa.House.Management.System.data.models.User;
+import com.semicolon.africa.House.Management.System.data.models.*;
 import com.semicolon.africa.House.Management.System.data.repository.RoomRepository;
 import com.semicolon.africa.House.Management.System.data.repository.UserRepository;
 import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
@@ -53,6 +50,7 @@ class AdminServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
+                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -64,6 +62,7 @@ class AdminServiceImplTest {
                 .password("ginagina")
                 .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
+                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest2);
@@ -80,45 +79,6 @@ class AdminServiceImplTest {
         assertThat(assignRoomResponse, is("room successfully assigned"));
     }
 
-//    @Test
-//    void testThatAdminUserCannotAssignRoomIfUserHasNotMadePayment(){
-//        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
-//                .firstName("lota")
-//                .lastName("solomon")
-//                .email("lota@gmail.com")
-//                .password("lota123")
-//                .confirmPassword("lota123")
-//                .gender(Gender.MALE)
-//                .isMadePayment(true)
-//                .build();
-//
-//        userService.bookRoom(bookRoomRequest);
-//
-//        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
-//                .firstName("gina")
-//                .lastName("dimma")
-//                .email("gina@gmail.com")
-//                .password("ginagina")
-//                .confirmPassword("ginagina")
-//                .isMadePayment(false)
-//                .gender(Gender.FEMALE)
-//                .build();
-//
-//        userService.bookRoom(bookRoomRequest2);
-//
-//        List<User> users = userService.getAllUsers();
-//        assertThat(users.size(), equalTo(2));
-//
-//        Room room = new Room();
-//        room.setRoomNumber(3);
-//        room.setRoomType(RoomType.FEMALE_ROOM);
-//        AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
-//
-////        String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
-////        assertThat(assignRoomResponse, is("room successfully assigned"));
-//
-//        assertThrows(PaymentException.class, ()->adminService.assignRoom(assignRoomRequest));
-//    }
 
     @Test
     void testThatAdminUserCannotAssignFemaleToMAleRoom_throwException(){
@@ -129,6 +89,7 @@ class AdminServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
+                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -140,6 +101,7 @@ class AdminServiceImplTest {
                 .password("ginagina")
                 .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
+                .makePayment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest2);
@@ -164,6 +126,7 @@ class AdminServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
+                .makePayment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -175,6 +138,7 @@ class AdminServiceImplTest {
                 .password("ginagina")
                 .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
+                .makePayment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest2);
@@ -199,6 +163,7 @@ class AdminServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
+                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -210,6 +175,7 @@ class AdminServiceImplTest {
                 .password("ginagina")
                 .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
+                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest2);
@@ -234,6 +200,7 @@ class AdminServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
+                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -245,6 +212,7 @@ class AdminServiceImplTest {
                 .password("ginagina")
                 .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
+                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest2);
@@ -281,6 +249,7 @@ class AdminServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
+                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -292,6 +261,7 @@ class AdminServiceImplTest {
                 .password("ginagina")
                 .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
+                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest2);

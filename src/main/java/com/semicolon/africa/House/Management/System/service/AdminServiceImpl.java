@@ -12,6 +12,9 @@ import com.semicolon.africa.House.Management.System.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class AdminServiceImpl implements AdminService {
 
@@ -29,28 +32,26 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public String assignRoom(AssignRoomRequest assignRoomRequest) {
-
         User user = userRepository.findByEmail(assignRoomRequest.getNewOccupantEmail()).orElseThrow(()-> new UserNotFoundException("user not found"));
 
         if(assignRoomRequest.getRoom().getRoomNumber() > 60 || assignRoomRequest.getRoom().getRoomNumber() < 1){
-            throw new RoomNumberDoesNotExistException("room " + assignRoomRequest.getRoom().getRoomNumber() +" not available");
+            throw new RoomNumberDoesNotExistException("room " + assignRoomRequest.getRoom().getRoomNumber() + " not available");
         }
 
         if(user.getGender().equals(Gender.FEMALE) && (assignRoomRequest.getRoom().getRoomNumber() > 30 || assignRoomRequest.getRoom().getRoomNumber() < 1)){
-
-            throw new MaleWingException("cannot add "+ user.getEmail()+" to male wing");
+            throw new MaleWingException("cannot add " + user.getEmail()+ " to male wing");
         }
         if(user.getGender().equals(Gender.MALE) && (assignRoomRequest.getRoom().getRoomNumber() < 30 || assignRoomRequest.getRoom().getRoomNumber() > 60)){
-            throw new FemaleWingException("cannot add "+user.getEmail()+"  to female wing");
+            throw new FemaleWingException("cannot add " + user.getEmail()+ "  to female wing");
         }
-//        if(!user.isMadePayment()){
-//            throw new PaymentException( user.getEmail() +" has not made payment");
-//        }
 
         Room room = new Room();
-        room.setEmail(user.getEmail());
+//        room.setEmail(user.getEmail());
         room.setRoomNumber(assignRoomRequest.getRoom().getRoomNumber());
         room.setRoomType(assignRoomRequest.getRoom().getRoomType());
+//        List<User> users = new ArrayList<>();
+        room.getRoomMembers().add(user);
+
 
         roomRepository.save(room);
 
