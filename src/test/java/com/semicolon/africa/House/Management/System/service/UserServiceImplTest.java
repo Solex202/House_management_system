@@ -38,7 +38,7 @@ class UserServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
-                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -87,7 +87,7 @@ class UserServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
-                .makePayment(Payment.SIX_HUNDRED_THOUSAND)
+                .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);

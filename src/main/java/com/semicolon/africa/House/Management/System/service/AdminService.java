@@ -6,4 +6,6 @@ public interface AdminService {
     String assignRoom(AssignRoomRequest assignRoomRequest);
 
     void evictTenant(String email);
+
+    String findBookingByEmail(String email);
 }

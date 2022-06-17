@@ -28,7 +28,7 @@ public class BookRoomRequest {
     @Min(6)
     private String confirmPassword;
     private Gender gender;
-    private Payment makePayment;
+    private Payment payment;
     private LocalDateTime localDateTime;
 
     public BookRoomRequest(){

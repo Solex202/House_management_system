@@ -19,19 +19,15 @@ public class UserServiceImpl implements UserService{
 
     private ModelMapper mapper = new ModelMapper();
 
-
     @Override
     public UserDto bookRoom(BookRoomRequest bookRoomRequest) {
-        if(emailAlreadyExists(bookRoomRequest.getEmail())){
-            throw new EmailAlreadyExistsException("Email already exist");
-        }
-        if(!bookRoomRequest.getPassword().matches(bookRoomRequest.getConfirmPassword())){
-            throw new PasswordMustMatchException("Passwords must match");
-        }
+        if(emailAlreadyExists(bookRoomRequest.getEmail())) throw new EmailAlreadyExistsException("Email already exist");
 
-        if(bookRoomRequest.getMakePayment() == null){
-            throw new PaymentException("Cannot book room,please make payment");
-        }
+        boolean passwordsDoesNotMatch = !bookRoomRequest.getPassword().matches(bookRoomRequest.getConfirmPassword());
+        if(passwordsDoesNotMatch) throw new PasswordMustMatchException("Passwords must match");
+
+        if(bookRoomRequest.getPayment() == null) throw new PaymentException("Cannot book room,please make your payment");
+
         User user = User.builder()
                 .firstName(bookRoomRequest.getFirstName())
                 .lastName(bookRoomRequest.getLastName())
@@ -39,7 +35,7 @@ public class UserServiceImpl implements UserService{
                 .password(bookRoomRequest.getPassword())
                 .confirmPassword(bookRoomRequest.getConfirmPassword())
                 .gender(bookRoomRequest.getGender())
-                .makePayment(bookRoomRequest.getMakePayment())
+                .payment(bookRoomRequest.getPayment())
                 .build();
 
         user.setPaymentStatus(true);

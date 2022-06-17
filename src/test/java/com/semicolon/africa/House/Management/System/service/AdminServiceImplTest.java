@@ -49,8 +49,8 @@ class AdminServiceImplTest {
                 .email("lota@gmail.com")
                 .password("lota123")
                 .confirmPassword("lota123")
-                .gender(Gender.MALE)
-                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
+                .gender(Gender.FEMALE)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -62,7 +62,7 @@ class AdminServiceImplTest {
                 .password("ginagina")
                 .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
-                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest2);
@@ -73,10 +73,14 @@ class AdminServiceImplTest {
         Room room = new Room();
         room.setRoomNumber(3);
         room.setRoomType(RoomType.FEMALE_ROOM);
+        room.setRoomMembers(users);
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
+//        AssignRoomRequest assignRoomRequest2 = new AssignRoomRequest(room, bookRoomRequest.getEmail());
 
         String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
+//        String assignRoomResponse2 = adminService.assignRoom(assignRoomRequest2);
         assertThat(assignRoomResponse, is("room successfully assigned"));
+        assertThat(room.getRoomMembers().size(), is(2));
     }
 
 
@@ -89,7 +93,7 @@ class AdminServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
-                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -101,7 +105,7 @@ class AdminServiceImplTest {
                 .password("ginagina")
                 .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
-                .makePayment(Payment.SIX_HUNDRED_THOUSAND)
+                .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest2);
@@ -126,7 +130,7 @@ class AdminServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
-                .makePayment(Payment.SIX_HUNDRED_THOUSAND)
+                .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -138,7 +142,7 @@ class AdminServiceImplTest {
                 .password("ginagina")
                 .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
-                .makePayment(Payment.SIX_HUNDRED_THOUSAND)
+                .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest2);
@@ -163,7 +167,7 @@ class AdminServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
-                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -175,7 +179,7 @@ class AdminServiceImplTest {
                 .password("ginagina")
                 .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
-                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest2);
@@ -200,7 +204,7 @@ class AdminServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
-                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -212,7 +216,7 @@ class AdminServiceImplTest {
                 .password("ginagina")
                 .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
-                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest2);
@@ -249,7 +253,7 @@ class AdminServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
-                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest);
@@ -261,7 +265,7 @@ class AdminServiceImplTest {
                 .password("ginagina")
                 .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
-                .makePayment(Payment.THREE_HUNDRED_THOUSAND)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
         userService.bookRoom(bookRoomRequest2);
@@ -281,6 +285,40 @@ class AdminServiceImplTest {
 
         List<User> users2 = userService.getAllUsers();
         assertThat(users2.size(), equalTo(1));
+
+    }
+
+    @Test
+    void testThatAdminUserCanFindBooking(){
+        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
+                .firstName("lota")
+                .lastName("solomon")
+                .email("lota@gmail.com")
+                .password("lota123")
+                .confirmPassword("lota123")
+                .gender(Gender.MALE)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
+                .build();
+
+        userService.bookRoom(bookRoomRequest);
+
+        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
+                .firstName("gina")
+                .lastName("dimma")
+                .email("gina@gmail.com")
+                .password("ginagina")
+                .confirmPassword("ginagina")
+                .gender(Gender.FEMALE)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
+                .build();
+
+        userService.bookRoom(bookRoomRequest2);
+
+        List<User> users = userService.getAllUsers();
+        assertThat(users.size(), equalTo(2));
+
+       String findBooking = adminService.findBookingByEmail( bookRoomRequest2.getEmail());
+
 
     }
 

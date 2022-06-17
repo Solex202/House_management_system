@@ -31,7 +31,7 @@ public class User {
     private String confirmPassword;
 
     private Gender gender;
-    private Payment makePayment;
+    private Payment payment;
     private boolean paymentStatus;
 //    private LocalDateTime localDateTime;
 }
