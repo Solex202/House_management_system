@@ -8,6 +8,7 @@ import com.semicolon.africa.House.Management.System.data.repository.RoomReposito
 import com.semicolon.africa.House.Management.System.data.repository.UserRepository;
 import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
+import com.semicolon.africa.House.Management.System.dtos.response.FindBookingResponse;
 import com.semicolon.africa.House.Management.System.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,8 +78,17 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public String findBookingByEmail(String email) {
+    public FindBookingResponse searchBookingByEmail(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException("booking not found"));
-        return null;
+
+        FindBookingResponse response = new FindBookingResponse();
+        response.setFirstName(user.getFirstName());
+        response.setLastName(user.getLastName());
+        response.setEmail(user.getEmail());
+        response.setGender(user.getGender());
+        response.setPayment(user.getPayment());
+//        response.setId(user.getId());
+
+        return response;
     }
 }

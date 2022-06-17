@@ -5,6 +5,7 @@ import com.semicolon.africa.House.Management.System.data.repository.RoomReposito
 import com.semicolon.africa.House.Management.System.data.repository.UserRepository;
 import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
+import com.semicolon.africa.House.Management.System.dtos.response.FindBookingResponse;
 import com.semicolon.africa.House.Management.System.exception.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -317,7 +318,13 @@ class AdminServiceImplTest {
         List<User> users = userService.getAllUsers();
         assertThat(users.size(), equalTo(2));
 
-       String findBooking = adminService.findBookingByEmail( bookRoomRequest2.getEmail());
+       FindBookingResponse response = adminService.searchBookingByEmail(bookRoomRequest2.getEmail());
+       assertThat(response.getFirstName(),is("gina"));
+       assertThat(response.getLastName(),is("dimma"));
+       assertThat(response.getEmail(),is("gina@gmail.com"));
+       assertThat(response.getGender(),is(Gender.FEMALE));
+       assertThat(response.getPayment(),is(Payment.THREE_HUNDRED_THOUSAND));
+//       assertThat(response.getId(),is(bookRoomRequest2.getId()));
 
 
     }
