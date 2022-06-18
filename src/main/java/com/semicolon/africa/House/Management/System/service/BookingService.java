@@ -6,7 +6,7 @@ import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest
 
 import java.util.List;
 
-public interface UserService {
+public interface BookingService {
     UserDto bookRoom(BookRoomRequest bookRoomRequest);
 
     List<User> getAllUsers();

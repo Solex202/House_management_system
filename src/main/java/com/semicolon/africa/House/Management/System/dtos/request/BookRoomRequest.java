@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @Data
-//@NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 //@RequiredArgsConstructor
 @Validated
@@ -29,10 +29,10 @@ public class BookRoomRequest {
     private String confirmPassword;
     private Gender gender;
     private Payment payment;
-    private LocalDateTime localDateTime;
+    private LocalDateTime bookingTime = LocalDateTime.now();
 
-    public BookRoomRequest(){
-        this.localDateTime = LocalDateTime.now();
-    }
+//    public BookRoomRequest(){
+//        this.localDateTime = LocalDateTime.now();
+//    }
 
 }

@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserServiceImplTest {
 
     @Autowired
-    private UserService userService;
+    private BookingService userService;
 
     @BeforeEach
     void setUp() {

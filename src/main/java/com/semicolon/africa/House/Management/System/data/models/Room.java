@@ -17,7 +17,7 @@ public class Room {
     private int roomNumber;
     private RoomType roomType;
     @Email
-    private String email;
+//    private String email;
     private List<User> roomMembers = new ArrayList<>();
 
     public Room(int roomNumber, RoomType type) {

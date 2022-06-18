@@ -1,7 +1,7 @@
 package com.semicolon.africa.House.Management.System.service;
 
 import com.semicolon.africa.House.Management.System.data.models.User;
-import com.semicolon.africa.House.Management.System.data.repository.UserRepository;
+import com.semicolon.africa.House.Management.System.data.repository.BookingRepository;
 import com.semicolon.africa.House.Management.System.dtos.UserDto;
 import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
 import com.semicolon.africa.House.Management.System.exception.*;
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class BookingServiceImpl implements BookingService {
 
     @Autowired
-    private UserRepository userRepository;
+    private BookingRepository bookingRepository;
 
     private ModelMapper mapper = new ModelMapper();
 
@@ -39,23 +39,23 @@ public class UserServiceImpl implements UserService{
                 .build();
 
         user.setPaymentStatus(true);
-         userRepository.save(user);
+         bookingRepository.save(user);
 
         return mapper.map(user, UserDto.class);
     }
 
     private boolean emailAlreadyExists(String email) {
-        return userRepository.findByEmail(email).isPresent();
+        return bookingRepository.findByEmail(email).isPresent();
     }
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return bookingRepository.findAll();
     }
 
     @Override
     public void deleteAll() {
-        userRepository.deleteAll();
+        bookingRepository.deleteAll();
     }
 
 }

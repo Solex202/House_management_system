@@ -2,7 +2,7 @@ package com.semicolon.africa.House.Management.System.service;
 
 import com.semicolon.africa.House.Management.System.data.models.*;
 import com.semicolon.africa.House.Management.System.data.repository.RoomRepository;
-import com.semicolon.africa.House.Management.System.data.repository.UserRepository;
+import com.semicolon.africa.House.Management.System.data.repository.BookingRepository;
 import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.response.FindBookingResponse;
@@ -24,15 +24,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataMongoTest
 class AdminServiceImplTest {
 
-
     @Autowired
-    UserRepository userRepository;
+    BookingRepository bookingRepository;
 
     @Autowired
     RoomRepository roomRepository;
 
     @Autowired
-    private UserService userService;
+    private BookingService bookingService;
 
     @Autowired
     private AdminService adminService;
@@ -54,7 +53,7 @@ class AdminServiceImplTest {
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest);
+        bookingService.bookRoom(bookRoomRequest);
 
         BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
                 .firstName("gina")
@@ -66,9 +65,9 @@ class AdminServiceImplTest {
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest2);
+        bookingService.bookRoom(bookRoomRequest2);
 
-        List<User> users = userService.getAllUsers();
+        List<User> users = bookingService.getAllUsers();
         assertThat(users.size(), equalTo(2));
 
         Room room = new Room();
@@ -80,7 +79,7 @@ class AdminServiceImplTest {
 
         String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
 //        String assignRoomResponse2 = adminService.assignRoom(assignRoomRequest2);
-        assertThat(assignRoomResponse, is("room successfully assigned"));
+        assertThat(assignRoomResponse, is("Room successfully assigned"));
         assertThat(room.getRoomMembers().size(), is(2));
     }
 
@@ -97,7 +96,7 @@ class AdminServiceImplTest {
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest);
+        bookingService.bookRoom(bookRoomRequest);
 
         BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
                 .firstName("gina")
@@ -109,9 +108,9 @@ class AdminServiceImplTest {
                 .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest2);
+        bookingService.bookRoom(bookRoomRequest2);
 
-        List<User> users = userService.getAllUsers();
+        List<User> users = bookingService.getAllUsers();
         assertThat(users.size(), equalTo(2));
 
         Room room = new Room();
@@ -134,7 +133,7 @@ class AdminServiceImplTest {
                 .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest);
+        bookingService.bookRoom(bookRoomRequest);
 
         BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
                 .firstName("gina")
@@ -146,9 +145,9 @@ class AdminServiceImplTest {
                 .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest2);
+        bookingService.bookRoom(bookRoomRequest2);
 
-        List<User> users = userService.getAllUsers();
+        List<User> users = bookingService.getAllUsers();
         assertThat(users.size(), equalTo(2));
 
         Room room = new Room();
@@ -171,7 +170,7 @@ class AdminServiceImplTest {
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest);
+        bookingService.bookRoom(bookRoomRequest);
 
         BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
                 .firstName("gina")
@@ -183,9 +182,9 @@ class AdminServiceImplTest {
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest2);
+        bookingService.bookRoom(bookRoomRequest2);
 
-        List<User> users = userService.getAllUsers();
+        List<User> users = bookingService.getAllUsers();
         assertThat(users.size(), equalTo(2));
 
         Room room = new Room();
@@ -208,7 +207,7 @@ class AdminServiceImplTest {
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest);
+        bookingService.bookRoom(bookRoomRequest);
 
         BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
                 .firstName("gina")
@@ -220,9 +219,9 @@ class AdminServiceImplTest {
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest2);
+        bookingService.bookRoom(bookRoomRequest2);
 
-        List<User> users = userService.getAllUsers();
+        List<User> users = bookingService.getAllUsers();
         assertThat(users.size(), equalTo(2));
 
         Room room = new Room();
@@ -246,7 +245,7 @@ class AdminServiceImplTest {
     }
 
     @Test
-    void testThatAdminUserCanEvictOccupant(){
+    void testThatAdminUserCanEvictOccupantFromRoom(){
         BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
                 .firstName("lota")
                 .lastName("solomon")
@@ -257,7 +256,7 @@ class AdminServiceImplTest {
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest);
+        bookingService.bookRoom(bookRoomRequest);
 
         BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
                 .firstName("gina")
@@ -269,9 +268,9 @@ class AdminServiceImplTest {
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest2);
+        bookingService.bookRoom(bookRoomRequest2);
 
-        List<User> users = userService.getAllUsers();
+        List<User> users = bookingService.getAllUsers();
         assertThat(users.size(), equalTo(2));
 
         Room room = new Room();
@@ -280,13 +279,13 @@ class AdminServiceImplTest {
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
 
         String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
-        assertThat(assignRoomResponse, is("room successfully assigned"));
+        assertThat(assignRoomResponse, is("Room successfully assigned"));
 
-        adminService.evictTenant(bookRoomRequest2.getEmail());
+        String response = adminService.evictTenant(bookRoomRequest2.getEmail(), room);
 
-        List<User> users2 = userService.getAllUsers();
+        List<User> users2 = bookingService.getAllUsers();
         assertThat(users2.size(), equalTo(1));
-
+        assertThat(response, is("Tenant deleted"));
     }
 
     @Test
@@ -301,7 +300,7 @@ class AdminServiceImplTest {
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest);
+        bookingService.bookRoom(bookRoomRequest);
 
         BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
                 .firstName("gina")
@@ -313,9 +312,9 @@ class AdminServiceImplTest {
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest2);
+        bookingService.bookRoom(bookRoomRequest2);
 
-        List<User> users = userService.getAllUsers();
+        List<User> users = bookingService.getAllUsers();
         assertThat(users.size(), equalTo(2));
 
        FindBookingResponse response = adminService.searchBookingByEmail(bookRoomRequest2.getEmail());
@@ -325,12 +324,11 @@ class AdminServiceImplTest {
        assertThat(response.getGender(),is(Gender.FEMALE));
        assertThat(response.getPayment(),is(Payment.THREE_HUNDRED_THOUSAND));
 //       assertThat(response.getId(),is(bookRoomRequest2.getId()));
-
-
     }
+
 
     @AfterEach
     void tearDown() {
-        userService.deleteAll();
+        bookingService.deleteAll();
     }
 }
