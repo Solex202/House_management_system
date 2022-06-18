@@ -23,15 +23,14 @@ public class User {
     private String id;
     private String firstName;
     private String lastName;
-    @Email
     private String email;
-    @Min(6)
     private String password;
-    @Min(6)
     private String confirmPassword;
 
     private Gender gender;
     private Payment payment;
     private boolean paymentStatus;
-//    private LocalDateTime localDateTime;
+    private LocalDateTime localDateTime;
+
+
 }

@@ -31,18 +31,9 @@ class UserServiceImplTest {
     @Test
     void testThatCanUserCanBookRoom(){
         //given
-        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
-                .gender(Gender.MALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
-
+        BookRoomRequest bookRoomRequest = new BookRoomRequest("lota", "solomon", "lota@gmail.com",
+                "lota123", "lota123", Gender.MALE, Payment.THREE_HUNDRED_THOUSAND);
         userService.bookRoom(bookRoomRequest);
-
         assertThat(userService.getAllUsers().size(), is(1));
     }
 
@@ -56,10 +47,9 @@ class UserServiceImplTest {
                 .password("lota123")
                 .confirmPassword("lota123")
                 .gender(Gender.MALE)
-//                .makePayment()
                 .build();
 
-        assertThrows(PaymentException.class,()-> userService.bookRoom(bookRoomRequest));
+        assertThrows(PaymentException.class, ()-> userService.bookRoom(bookRoomRequest));
     }
 
     @Test

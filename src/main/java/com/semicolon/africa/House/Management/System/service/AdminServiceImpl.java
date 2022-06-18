@@ -42,18 +42,16 @@ public class AdminServiceImpl implements AdminService {
         Optional<Room> existingRoom = roomRepository.findRoomByRoomNumber(assignRoomRequest.getRoom().getRoomNumber());
         if (existingRoom.isPresent()){
             existingRoom.get().getRoomMembers().add(user);
-//            log.info("Room exists, members are: "+ existingRoom.get().getRoomMembers() );
+            log.info("Room exists, members are: "+ existingRoom.get().getRoomMembers() );
             roomRepository.save(existingRoom.get());
         }else{
             Room room = new Room();
             room.setRoomNumber(assignRoomRequest.getRoom().getRoomNumber());
             room.setRoomType(assignRoomRequest.getRoom().getRoomType());
             room.getRoomMembers().add(user);
-//            log.info("new room members are: "+ room.getRoomMembers() );
+            log.info("new room members are: "+ room.getRoomMembers() );
             roomRepository.save(room);
         }
-
-
 
         return "Room successfully assigned";
     }
@@ -72,6 +70,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public FindBookingResponse searchBookingByEmail(String email) {
         User user = bookingRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException("booking not found"));
+        System.out.println(user);
 
         FindBookingResponse response = new FindBookingResponse();
         response.setFirstName(user.getFirstName());
@@ -79,21 +78,25 @@ public class AdminServiceImpl implements AdminService {
         response.setEmail(user.getEmail());
         response.setGender(user.getGender());
         response.setPayment(user.getPayment());
-//        response.setId(user.getId());
+        response.setId(user.getId());
         return response;
     }
 
     @Override
-    public String evictTenant(String email, Room room) {
+    public String evictTenant(String newOccupantEmail, Room room) {
         Room newRoom = roomRepository.findRoomByRoomNumber(room.getRoomNumber()).orElseThrow(()-> new RoomNumberDoesNotExistException("Room not found"));
 
         List<User> tenants = newRoom.getRoomMembers();
+                log.info("room members are ===============>" + tenants);
         for (User tenant: tenants) {
-            if(tenant.getEmail().matches(email)){
+            if(tenant.getEmail().matches(newOccupantEmail)){
+                tenants.remove(tenant);
+                log.info("room members are ===============>" + tenants);
 
+                roomRepository.save(newRoom);
+                break;
             }
-
         }
-        return null;
+        return "Tenant deleted";
     }
 }

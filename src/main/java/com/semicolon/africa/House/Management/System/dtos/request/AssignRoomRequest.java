@@ -13,4 +13,5 @@ import javax.validation.constraints.Email;
 public class AssignRoomRequest {
     private Room room;
     @Email
-    private String newOccupantEmail;}
+    private String newOccupantEmail;
+}

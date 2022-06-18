@@ -11,5 +11,9 @@ public interface AdminService {
 
     FindBookingResponse searchBookingByEmail(String email);
 
-    String evictTenant(String email, Room room);
+    String evictTenant(String newOccupantEmail, Room room);
+
+//    String evictTenant(AssignRoomRequest assignRoomRequest2);
+
+//    String evictTenant(String email, Room room);
 }

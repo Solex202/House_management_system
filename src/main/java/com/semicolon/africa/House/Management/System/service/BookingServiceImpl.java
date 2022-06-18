@@ -29,6 +29,7 @@ public class BookingServiceImpl implements BookingService {
         if(bookRoomRequest.getPayment() == null) throw new PaymentException("Cannot book room,please make your payment");
 
         User user = User.builder()
+                .id(bookRoomRequest.getId())
                 .firstName(bookRoomRequest.getFirstName())
                 .lastName(bookRoomRequest.getLastName())
                 .email(bookRoomRequest.getEmail())
@@ -36,6 +37,7 @@ public class BookingServiceImpl implements BookingService {
                 .confirmPassword(bookRoomRequest.getConfirmPassword())
                 .gender(bookRoomRequest.getGender())
                 .payment(bookRoomRequest.getPayment())
+                .localDateTime(bookRoomRequest.getBookingTime())
                 .build();
 
         user.setPaymentStatus(true);

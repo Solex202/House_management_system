@@ -6,33 +6,38 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@RequiredArgsConstructor
 @Validated
 public class BookRoomRequest {
     @Id
     private String id;
     private String firstName;
     private String lastName;
-    @Email
     private String email;
-    @Min(6)
     private String password;
-    @Min(6)
     private String confirmPassword;
     private Gender gender;
     private Payment payment;
-    private LocalDateTime bookingTime = LocalDateTime.now();
+    private LocalDateTime bookingTime;
 
-//    public BookRoomRequest(){
-//        this.localDateTime = LocalDateTime.now();
-//    }
+    public BookRoomRequest(String firstName,String lastName,String email,String password,
+                           String confirmPassword,Gender gender,Payment payment) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.gender = gender;
+        this.payment = payment;
+        bookingTime = LocalDateTime.now();
+    }
+
+
+
 
 }

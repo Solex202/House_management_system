@@ -7,6 +7,7 @@ import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomReque
 import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.response.FindBookingResponse;
 import com.semicolon.africa.House.Management.System.exception.*;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,13 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 
-
+@Slf4j
 @DataMongoTest
 class AdminServiceImplTest {
 
@@ -73,14 +75,13 @@ class AdminServiceImplTest {
         Room room = new Room();
         room.setRoomNumber(3);
         room.setRoomType(RoomType.FEMALE_ROOM);
-        room.setRoomMembers(users);
+//        room.setRoomMembers(users);
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
-//        AssignRoomRequest assignRoomRequest2 = new AssignRoomRequest(room, bookRoomRequest.getEmail());
 
         String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
-//        String assignRoomResponse2 = adminService.assignRoom(assignRoomRequest2);
         assertThat(assignRoomResponse, is("Room successfully assigned"));
-        assertThat(room.getRoomMembers().size(), is(2));
+        Optional<Room> userRoom = roomRepository.findRoomByRoomNumber(3);
+        assertThat(userRoom.get().getRoomMembers().size(), is(1));
     }
 
 
@@ -252,7 +253,7 @@ class AdminServiceImplTest {
                 .email("lota@gmail.com")
                 .password("lota123")
                 .confirmPassword("lota123")
-                .gender(Gender.MALE)
+                .gender(Gender.FEMALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
 
@@ -274,23 +275,27 @@ class AdminServiceImplTest {
         assertThat(users.size(), equalTo(2));
 
         Room room = new Room();
-        room.setRoomNumber(2);
+        room.setRoomNumber(3);
         room.setRoomType(RoomType.FEMALE_ROOM);
+        room.setRoomMembers(users);
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
 
         String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
         assertThat(assignRoomResponse, is("Room successfully assigned"));
+        Optional<Room> userRoom = roomRepository.findRoomByRoomNumber(3);
+        assertThat(userRoom.get().getRoomMembers().size(), is(1));
 
-        String response = adminService.evictTenant(bookRoomRequest2.getEmail(), room);
+        String response = adminService.evictTenant(assignRoomRequest.getNewOccupantEmail(), room);
 
-        List<User> users2 = bookingService.getAllUsers();
-        assertThat(users2.size(), equalTo(1));
+        assertThat(roomRepository.findRoomByRoomNumber(3).get().getRoomMembers().size(),is(0));
         assertThat(response, is("Tenant deleted"));
+
     }
 
     @Test
     void testThatAdminUserCanFindBooking(){
         BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
+                .id("1")
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
@@ -303,6 +308,7 @@ class AdminServiceImplTest {
         bookingService.bookRoom(bookRoomRequest);
 
         BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
+                .id("2")
                 .firstName("gina")
                 .lastName("dimma")
                 .email("gina@gmail.com")
@@ -318,12 +324,15 @@ class AdminServiceImplTest {
         assertThat(users.size(), equalTo(2));
 
        FindBookingResponse response = adminService.searchBookingByEmail(bookRoomRequest2.getEmail());
+        System.out.println("-------------------->"+response);
+        System.out.println(bookRoomRequest2.getId());
+        System.out.println(response.getId());
        assertThat(response.getFirstName(),is("gina"));
        assertThat(response.getLastName(),is("dimma"));
        assertThat(response.getEmail(),is("gina@gmail.com"));
        assertThat(response.getGender(),is(Gender.FEMALE));
        assertThat(response.getPayment(),is(Payment.THREE_HUNDRED_THOUSAND));
-//       assertThat(response.getId(),is(bookRoomRequest2.getId()));
+       assertThat(response.getId(),is(bookRoomRequest2.getId()));
     }
 
 
