@@ -2,6 +2,7 @@ package com.semicolon.africa.House.Management.System.dtos.response;
 
 import com.semicolon.africa.House.Management.System.data.models.Gender;
 import com.semicolon.africa.House.Management.System.data.models.Payment;
+import com.semicolon.africa.House.Management.System.data.models.RentDuration;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,6 @@ public class FindBookingResponse {
     private String email;
     private Gender gender;
     private Payment payment;
-    private LocalDateTime localDateTime;
-
+    private LocalDateTime bookingTime;
+    private RentDuration rentalDuration;
 }

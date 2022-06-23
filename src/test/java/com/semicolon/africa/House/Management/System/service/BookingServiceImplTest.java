@@ -31,8 +31,13 @@ class BookingServiceImplTest {
     @Test
     void testThatCanUserCanBookRoom(){
         //given
+//        BookRoomRequest bookRoomRequest = new BookRoomRequest();
+//        bookRoomRequest.setFirstName("lota");
+//        bookRoomRequest.setLastName("solomon");
+//        bookRoomRequest.setEmail("lota@gmail.com");
+
         BookRoomRequest bookRoomRequest = new BookRoomRequest("lota", "solomon", "lota@gmail.com",
-                "lota123", "lota123", Gender.MALE, Payment.TWO_HUNDRED_THOUSAND);
+                 Gender.MALE, Payment.TWO_HUNDRED_THOUSAND);
         bookingService.bookRoom(bookRoomRequest);
         assertThat(bookingService.getAllUsers().size(), is(1));
     }
@@ -44,28 +49,14 @@ class BookingServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
+//                .password("lota123")
+//                .confirmPassword("lota123")
                 .gender(Gender.MALE)
                 .build();
 
         assertThrows(PaymentException.class, ()-> bookingService.bookRoom(bookRoomRequest));
     }
 
-    @Test
-    void testThatUserCannotBookRoom_if_passwordsDontMatch_throwException(){
-        //given
-        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota1235")
-                .gender(Gender.MALE)
-                .build();
-
-        assertThrows(PasswordMustMatchException.class, ()-> bookingService.bookRoom(bookRoomRequest));
-    }
 
     @Test
     void testThatUserCannotBookRoom_if_emailAlreadyExist_throwException(){
@@ -74,8 +65,8 @@ class BookingServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
+//                .password("lota123")
+//                .confirmPassword("lota123")
                 .gender(Gender.MALE)
                 .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
@@ -86,8 +77,8 @@ class BookingServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("lota@gmail.com")
-                .password("ginagina")
-                .confirmPassword("ginagina")
+//                .password("ginagina")
+//                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .build();
 

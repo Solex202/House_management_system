@@ -17,4 +17,5 @@ public interface AdminService {
     List<Room> viewAllRooms();
 
 
+    FindBookingResponse searchBookingByBookingId(String id);
 }

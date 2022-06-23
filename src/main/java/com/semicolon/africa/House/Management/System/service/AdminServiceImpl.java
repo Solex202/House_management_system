@@ -69,7 +69,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public FindBookingResponse searchBookingByEmail(String email) {
         User user = bookingRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException("Booking not found"));
-        System.out.println(user);
 
         FindBookingResponse response = new FindBookingResponse();
         response.setFirstName(user.getFirstName());
@@ -102,5 +101,21 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Room> viewAllRooms() {
         return roomRepository.findAll();
+    }
+
+    @Override
+    public FindBookingResponse searchBookingByBookingId(String id) {
+
+        User user = bookingRepository.findById(id).orElseThrow(()-> new UserNotFoundException("booking not found"));
+
+        FindBookingResponse response = new FindBookingResponse();
+        response.setFirstName(user.getFirstName());
+        response.setLastName(user.getLastName());
+        response.setEmail(user.getEmail());
+        response.setGender(user.getGender());
+        response.setPayment(user.getPayment());
+        response.setBookingTime(user.getBookingTime());
+        response.setRentalDuration(user.getRentalDuration());
+        return response;
     }
 }

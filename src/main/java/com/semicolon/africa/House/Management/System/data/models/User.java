@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Data
@@ -18,13 +19,12 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
-    private String confirmPassword;
     private Gender gender;
     private Payment payment;
     private boolean paymentStatus;
     private LocalDateTime bookingTime;
     private RentDuration rentalDuration;
-//    private Date rentExpirationDate;
+
+    private LocalDateTime rentExpirationDate;
 
 }

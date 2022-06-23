@@ -1,6 +1,7 @@
 package com.semicolon.africa.House.Management.System.service;
 
 import com.semicolon.africa.House.Management.System.data.models.Payment;
+import com.semicolon.africa.House.Management.System.data.models.RentDuration;
 import com.semicolon.africa.House.Management.System.data.models.User;
 import com.semicolon.africa.House.Management.System.data.repository.BookingRepository;
 import com.semicolon.africa.House.Management.System.dtos.UserDto;
@@ -27,44 +28,40 @@ public class BookingServiceImpl implements BookingService {
     public UserDto bookRoom(BookRoomRequest bookRoomRequest) {
         if(emailAlreadyExists(bookRoomRequest.getEmail())) throw new EmailAlreadyExistsException("Email already exist");
 
-        boolean passwordsDoesNotMatch = !bookRoomRequest.getPassword().matches(bookRoomRequest.getConfirmPassword());
-        if(passwordsDoesNotMatch) throw new PasswordMustMatchException("Passwords must match");
-
         if(bookRoomRequest.getPayment() == null) throw new PaymentException("Cannot book room,please make your payment");
 
+        User user = userDetails(bookRoomRequest);
+
+//        Calendar calendar = new Calendar()
+
         if(bookRoomRequest.getPayment() == Payment.TWO_HUNDRED_THOUSAND){
+            user.setRentalDuration(RentDuration.THREE_MONTHS);
+            user.setRentExpirationDate(bookRoomRequest.getBookingTime());
+        }else
+            if(bookRoomRequest.getPayment() == Payment.THREE_HUNDRED_THOUSAND){
+                user.setRentalDuration(RentDuration.SIX_MONTHS);
 
-        }
+            }else
+                if(bookRoomRequest.getPayment() == Payment.SIX_HUNDRED_THOUSAND){
+                user.setRentalDuration(RentDuration.TWELVE_MONTHS);
+            }
 
+        user.setPaymentStatus(true);
+        User savedUser =  bookingRepository.save(user);
 
+        return mapper.map(savedUser, UserDto.class);
+    }
+
+    private User userDetails(BookRoomRequest bookRoomRequest) {
         User user =  new User();
         user.setFirstName(bookRoomRequest.getFirstName());
         user.setLastName(bookRoomRequest.getLastName());
         user.setId(bookRoomRequest.getId());
         user.setEmail(bookRoomRequest.getEmail());
-        user.setPassword(bookRoomRequest.getPassword());
-        user.setConfirmPassword(bookRoomRequest.getConfirmPassword());
         user.setGender(bookRoomRequest.getGender());
         user.setPayment(bookRoomRequest.getPayment());
         user.setBookingTime(bookRoomRequest.getBookingTime());
-//                .id(bookRoomRequest.getId())
-//                .firstName(bookRoomRequest.getFirstName())
-//                .lastName(bookRoomRequest.getLastName())
-//                .email(bookRoomRequest.getEmail())
-//                .password(bookRoomRequest.getPassword())
-//                .confirmPassword(bookRoomRequest.getConfirmPassword())
-//                .gender(bookRoomRequest.getGender())
-//                .payment(bookRoomRequest.getPayment())
-//                .bookingTime(bookRoomRequest.getBookingTime())
-//                .build();
-       LocalDateTime result = user.getBookingTime();
-       log.info("first time is ==============>" + result);
-        user.setPaymentStatus(true);
-        User savedUser =  bookingRepository.save(user);
-
-
-        log.info("second time is =======================>" + user.getBookingTime());
-        return mapper.map(savedUser, UserDto.class);
+        return user;
     }
 
     private boolean emailAlreadyExists(String email) {

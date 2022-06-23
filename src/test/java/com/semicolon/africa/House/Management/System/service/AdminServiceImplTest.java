@@ -49,8 +49,6 @@ class AdminServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
                 .gender(Gender.FEMALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -61,8 +59,6 @@ class AdminServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("gina@gmail.com")
-                .password("ginagina")
-                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -93,8 +89,8 @@ class AdminServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
+//                .password("lota123")
+//                .confirmPassword("lota123")
                 .gender(Gender.MALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -105,8 +101,8 @@ class AdminServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("gina@gmail.com")
-                .password("ginagina")
-                .confirmPassword("ginagina")
+//                .password("ginagina")
+//                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
@@ -130,8 +126,8 @@ class AdminServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
+//                .password("lota123")
+//                .confirmPassword("lota123")
                 .gender(Gender.MALE)
                 .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
@@ -142,8 +138,8 @@ class AdminServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("gina@gmail.com")
-                .password("ginagina")
-                .confirmPassword("ginagina")
+//                .password("ginagina")
+//                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
@@ -167,8 +163,8 @@ class AdminServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
+//                .password("lota123")
+//                .confirmPassword("lota123")
                 .gender(Gender.MALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -179,8 +175,8 @@ class AdminServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("gina@gmail.com")
-                .password("ginagina")
-                .confirmPassword("ginagina")
+//                .password("ginagina")
+//                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -204,8 +200,8 @@ class AdminServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
+//                .password("lota123")
+//                .confirmPassword("lota123")
                 .gender(Gender.MALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -216,8 +212,8 @@ class AdminServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("gina@gmail.com")
-                .password("ginagina")
-                .confirmPassword("ginagina")
+//                .password("ginagina")
+//                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -253,8 +249,8 @@ class AdminServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
+//                .password("lota123")
+//                .confirmPassword("lota123")
                 .gender(Gender.FEMALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -265,8 +261,8 @@ class AdminServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("gina@gmail.com")
-                .password("ginagina")
-                .confirmPassword("ginagina")
+//                .password("ginagina")
+//                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -295,14 +291,12 @@ class AdminServiceImplTest {
     }
 
     @Test
-    void testThatAdminUserCanFindBooking(){
+    void testThatAdminUserCanFindBookingByEmail(){
         BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
                 .id("1")
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-                .password("lota123")
-                .confirmPassword("lota123")
                 .gender(Gender.MALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -314,8 +308,6 @@ class AdminServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("gina@gmail.com")
-                .password("ginagina")
-                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -333,6 +325,42 @@ class AdminServiceImplTest {
        assertThat(response.getGender(),is(Gender.FEMALE));
        assertThat(response.getPayment(),is(Payment.THREE_HUNDRED_THOUSAND));
        assertThat(response.getId(),is(bookRoomRequest2.getId()));
+    }
+
+    @Test
+    void testThatAdminUserCanFindBookingById(){
+        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
+                .id("1")
+                .firstName("lota")
+                .lastName("solomon")
+                .email("lota@gmail.com")
+                .gender(Gender.MALE)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
+                .build();
+
+        bookingService.bookRoom(bookRoomRequest);
+
+        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
+                .id("2")
+                .firstName("gina")
+                .lastName("dimma")
+                .email("gina@gmail.com")
+                .gender(Gender.FEMALE)
+                .payment(Payment.THREE_HUNDRED_THOUSAND)
+                .build();
+
+        bookingService.bookRoom(bookRoomRequest2);
+
+        List<User> users = bookingService.getAllUsers();
+        assertThat(users.size(), equalTo(2));
+
+        FindBookingResponse response = adminService.searchBookingByBookingId(bookRoomRequest2.getId());
+
+        assertThat(response.getFirstName(),is("gina"));
+        assertThat(response.getLastName(),is("dimma"));
+        assertThat(response.getEmail(),is("gina@gmail.com"));
+        assertThat(response.getGender(),is(Gender.FEMALE));
+        assertThat(response.getPayment(),is(Payment.THREE_HUNDRED_THOUSAND));
     }
 
     @Test
