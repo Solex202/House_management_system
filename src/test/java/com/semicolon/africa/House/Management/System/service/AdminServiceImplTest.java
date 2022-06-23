@@ -75,13 +75,15 @@ class AdminServiceImplTest {
         Room room = new Room();
         room.setRoomNumber(3);
         room.setRoomType(RoomType.FEMALE_ROOM);
-//        room.setRoomMembers(users);
         AssignRoomRequest assignRoomRequest = new AssignRoomRequest(room, bookRoomRequest2.getEmail());
+        AssignRoomRequest assignRoomRequest2 = new AssignRoomRequest(room, bookRoomRequest.getEmail());
 
         String assignRoomResponse = adminService.assignRoom(assignRoomRequest);
+        String assignRoomResponse2 = adminService.assignRoom(assignRoomRequest2);
+
         assertThat(assignRoomResponse, is("Room successfully assigned"));
         Optional<Room> userRoom = roomRepository.findRoomByRoomNumber(3);
-        assertThat(userRoom.get().getRoomMembers().size(), is(1));
+        assertThat(userRoom.get().getRoomMembers().size(), is(2));
     }
 
 
@@ -324,15 +326,36 @@ class AdminServiceImplTest {
         assertThat(users.size(), equalTo(2));
 
        FindBookingResponse response = adminService.searchBookingByEmail(bookRoomRequest2.getEmail());
-        System.out.println("-------------------->"+response);
-        System.out.println(bookRoomRequest2.getId());
-        System.out.println(response.getId());
+
        assertThat(response.getFirstName(),is("gina"));
        assertThat(response.getLastName(),is("dimma"));
        assertThat(response.getEmail(),is("gina@gmail.com"));
        assertThat(response.getGender(),is(Gender.FEMALE));
        assertThat(response.getPayment(),is(Payment.THREE_HUNDRED_THOUSAND));
        assertThat(response.getId(),is(bookRoomRequest2.getId()));
+    }
+
+    @Test
+    void testThatAdminCanViewAllRooms(){
+
+        Room room1 = new Room();
+        room1.setRoomNumber(3);
+        room1.setRoomType(RoomType.FEMALE_ROOM);
+        roomRepository.save(room1);
+
+        Room room2 = new Room();
+        room2.setRoomNumber(7);
+        room2.setRoomType(RoomType.FEMALE_ROOM);
+        roomRepository.save(room2);
+
+        Room room3 = new Room();
+        room3.setRoomNumber(54);
+        room3.setRoomType(RoomType.MALE_ROOM);
+        roomRepository.save(room3);
+
+        List<Room> rooms = adminService.viewAllRooms();
+        assertThat(rooms.size(), equalTo(3));
+
     }
 
 

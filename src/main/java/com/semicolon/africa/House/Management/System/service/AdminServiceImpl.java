@@ -35,6 +35,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public String assignRoom(AssignRoomRequest assignRoomRequest) {
+
         User user = bookingRepository.findByEmail(assignRoomRequest.getNewOccupantEmail()).orElseThrow(()-> new UserNotFoundException("user not found"));
 
         validateRoomAssignment(assignRoomRequest, user);
@@ -42,34 +43,32 @@ public class AdminServiceImpl implements AdminService {
         Optional<Room> existingRoom = roomRepository.findRoomByRoomNumber(assignRoomRequest.getRoom().getRoomNumber());
         if (existingRoom.isPresent()){
             existingRoom.get().getRoomMembers().add(user);
-            log.info("Room exists, members are: "+ existingRoom.get().getRoomMembers() );
             roomRepository.save(existingRoom.get());
-        }else{
+        }
+        else {
             Room room = new Room();
             room.setRoomNumber(assignRoomRequest.getRoom().getRoomNumber());
             room.setRoomType(assignRoomRequest.getRoom().getRoomType());
             room.getRoomMembers().add(user);
-            log.info("new room members are: "+ room.getRoomMembers() );
             roomRepository.save(room);
         }
-
         return "Room successfully assigned";
     }
 
     private void validateRoomAssignment(AssignRoomRequest assignRoomRequest, User user) {
         boolean isNotValidRoomNumber = assignRoomRequest.getRoom().getRoomNumber() > 60 || assignRoomRequest.getRoom().getRoomNumber() < 1;
-        if(isNotValidRoomNumber) throw new RoomNumberDoesNotExistException("room " + assignRoomRequest.getRoom().getRoomNumber() + " not available");
+        if(isNotValidRoomNumber) throw new RoomNumberDoesNotExistException("Room " + assignRoomRequest.getRoom().getRoomNumber() + " not available");
 
         boolean isNotFemaleRoom = user.getGender().equals(Gender.FEMALE) && (assignRoomRequest.getRoom().getRoomNumber() > 30 || assignRoomRequest.getRoom().getRoomNumber() < 1);
-        if(isNotFemaleRoom) throw new MaleWingException("cannot add " + user.getEmail() + " to male wing");
+        if(isNotFemaleRoom) throw new MaleWingException("Cannot add " + user.getEmail() + " to male wing");
 
         boolean isNotMaleRoom = user.getGender().equals(Gender.MALE) && (assignRoomRequest.getRoom().getRoomNumber() < 30 || assignRoomRequest.getRoom().getRoomNumber() > 60);
-        if(isNotMaleRoom) throw new FemaleWingException("cannot add " + user.getEmail() + " to female wing");
+        if(isNotMaleRoom) throw new FemaleWingException("Cannot add " + user.getEmail() + " to female wing");
     }
 
     @Override
     public FindBookingResponse searchBookingByEmail(String email) {
-        User user = bookingRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException("booking not found"));
+        User user = bookingRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException("Booking not found"));
         System.out.println(user);
 
         FindBookingResponse response = new FindBookingResponse();
@@ -88,7 +87,7 @@ public class AdminServiceImpl implements AdminService {
 
         List<User> tenants = newRoom.getRoomMembers();
                 log.info("room members are ===============>" + tenants);
-        for (User tenant: tenants) {
+        for (User tenant: tenants)
             if(tenant.getEmail().matches(newOccupantEmail)){
                 tenants.remove(tenant);
                 log.info("room members are ===============>" + tenants);
@@ -96,7 +95,12 @@ public class AdminServiceImpl implements AdminService {
                 roomRepository.save(newRoom);
                 break;
             }
-        }
+//        }
         return "Tenant deleted";
+    }
+
+    @Override
+    public List<Room> viewAllRooms() {
+        return roomRepository.findAll();
     }
 }

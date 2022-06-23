@@ -4,7 +4,6 @@ import com.semicolon.africa.House.Management.System.data.models.Gender;
 import com.semicolon.africa.House.Management.System.data.models.Payment;
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
 
@@ -12,8 +11,8 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Validated
-public class BookRoomRequest {
+public class BookRoomRequest
+{
     @Id
     private String id;
     private String firstName;
@@ -23,10 +22,12 @@ public class BookRoomRequest {
     private String confirmPassword;
     private Gender gender;
     private Payment payment;
-    private LocalDateTime bookingTime;
+    private LocalDateTime bookingTime = LocalDateTime.now();
 
     public BookRoomRequest(String firstName,String lastName,String email,String password,
-                           String confirmPassword,Gender gender,Payment payment) {
+                           String confirmPassword,Gender gender,Payment payment)
+    {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -36,8 +37,5 @@ public class BookRoomRequest {
         this.payment = payment;
         bookingTime = LocalDateTime.now();
     }
-
-
-
 
 }

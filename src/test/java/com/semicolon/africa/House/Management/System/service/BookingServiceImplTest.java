@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @DataMongoTest
-class UserServiceImplTest {
+class BookingServiceImplTest {
 
     @Autowired
     private BookingService bookingService;
