@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserServiceImplTest {
 
     @Autowired
-    private BookingService userService;
+    private BookingService bookingService;
 
     @BeforeEach
     void setUp() {
@@ -32,9 +32,9 @@ class UserServiceImplTest {
     void testThatCanUserCanBookRoom(){
         //given
         BookRoomRequest bookRoomRequest = new BookRoomRequest("lota", "solomon", "lota@gmail.com",
-                "lota123", "lota123", Gender.MALE, Payment.THREE_HUNDRED_THOUSAND);
-        userService.bookRoom(bookRoomRequest);
-        assertThat(userService.getAllUsers().size(), is(1));
+                "lota123", "lota123", Gender.MALE, Payment.TWO_HUNDRED_THOUSAND);
+        bookingService.bookRoom(bookRoomRequest);
+        assertThat(bookingService.getAllUsers().size(), is(1));
     }
 
     @Test
@@ -49,7 +49,7 @@ class UserServiceImplTest {
                 .gender(Gender.MALE)
                 .build();
 
-        assertThrows(PaymentException.class, ()-> userService.bookRoom(bookRoomRequest));
+        assertThrows(PaymentException.class, ()-> bookingService.bookRoom(bookRoomRequest));
     }
 
     @Test
@@ -64,7 +64,7 @@ class UserServiceImplTest {
                 .gender(Gender.MALE)
                 .build();
 
-        assertThrows(PasswordMustMatchException.class, ()-> userService.bookRoom(bookRoomRequest));
+        assertThrows(PasswordMustMatchException.class, ()-> bookingService.bookRoom(bookRoomRequest));
     }
 
     @Test
@@ -80,7 +80,7 @@ class UserServiceImplTest {
                 .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
 
-        userService.bookRoom(bookRoomRequest);
+        bookingService.bookRoom(bookRoomRequest);
 
         BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
                 .firstName("gina")
@@ -91,11 +91,11 @@ class UserServiceImplTest {
                 .gender(Gender.FEMALE)
                 .build();
 
-        assertThrows(EmailAlreadyExistsException.class, ()-> userService.bookRoom(bookRoomRequest2));
+        assertThrows(EmailAlreadyExistsException.class, ()-> bookingService.bookRoom(bookRoomRequest2));
     }
 
     @AfterEach
     void tearDown() {
-        userService.deleteAll();
+        bookingService.deleteAll();
     }
 }
