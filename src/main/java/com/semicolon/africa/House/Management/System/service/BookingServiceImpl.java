@@ -32,18 +32,22 @@ public class BookingServiceImpl implements BookingService {
 
         User user = userDetails(bookRoomRequest);
 
-//        Calendar calendar = new Calendar()
 
         if(bookRoomRequest.getPayment() == Payment.TWO_HUNDRED_THOUSAND){
             user.setRentalDuration(RentDuration.THREE_MONTHS);
-            user.setRentExpirationDate(bookRoomRequest.getBookingTime());
+            LocalDateTime threeMonths = LocalDateTime.of(bookRoomRequest.getBookingTime().getYear(), bookRoomRequest.getBookingTime().getMonth().getValue() + 3, bookRoomRequest.getBookingTime().getDayOfMonth(), bookRoomRequest.getBookingTime().getHour(), bookRoomRequest.getBookingTime().getMinute(), bookRoomRequest.getBookingTime().getSecond());
+            user.setRentExpirationDate(threeMonths);
         }else
             if(bookRoomRequest.getPayment() == Payment.THREE_HUNDRED_THOUSAND){
                 user.setRentalDuration(RentDuration.SIX_MONTHS);
+                LocalDateTime sixMonths = LocalDateTime.of(bookRoomRequest.getBookingTime().getYear(), bookRoomRequest.getBookingTime().getMonth().getValue() + 6, bookRoomRequest.getBookingTime().getDayOfMonth(), bookRoomRequest.getBookingTime().getHour(), bookRoomRequest.getBookingTime().getMinute(), bookRoomRequest.getBookingTime().getSecond());
+                user.setRentExpirationDate(sixMonths);
 
             }else
                 if(bookRoomRequest.getPayment() == Payment.SIX_HUNDRED_THOUSAND){
                 user.setRentalDuration(RentDuration.TWELVE_MONTHS);
+                    LocalDateTime twelveMonths = LocalDateTime.of(bookRoomRequest.getBookingTime().getYear() + 1, bookRoomRequest.getBookingTime().getMonth().getValue() , bookRoomRequest.getBookingTime().getDayOfMonth() - 1, bookRoomRequest.getBookingTime().getHour(), bookRoomRequest.getBookingTime().getMinute(), bookRoomRequest.getBookingTime().getSecond());
+                    user.setRentExpirationDate(twelveMonths);
             }
 
         user.setPaymentStatus(true);

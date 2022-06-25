@@ -4,7 +4,6 @@ import com.semicolon.africa.House.Management.System.data.models.Gender;
 import com.semicolon.africa.House.Management.System.data.models.Payment;
 import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
 import com.semicolon.africa.House.Management.System.exception.EmailAlreadyExistsException;
-import com.semicolon.africa.House.Management.System.exception.PasswordMustMatchException;
 import com.semicolon.africa.House.Management.System.exception.PaymentException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,13 +30,16 @@ class BookingServiceImplTest {
     @Test
     void testThatCanUserCanBookRoom(){
         //given
-//        BookRoomRequest bookRoomRequest = new BookRoomRequest();
-//        bookRoomRequest.setFirstName("lota");
-//        bookRoomRequest.setLastName("solomon");
-//        bookRoomRequest.setEmail("lota@gmail.com");
+        BookRoomRequest bookRoomRequest = new BookRoomRequest();
+        bookRoomRequest.setId("1");
+        bookRoomRequest.setFirstName("lota");
+        bookRoomRequest.setLastName("solomon");
+        bookRoomRequest.setEmail("lota@gmail.com");
+        bookRoomRequest.setGender(Gender.FEMALE);
+        bookRoomRequest.setPayment(Payment.THREE_HUNDRED_THOUSAND);
 
-        BookRoomRequest bookRoomRequest = new BookRoomRequest("lota", "solomon", "lota@gmail.com",
-                 Gender.MALE, Payment.TWO_HUNDRED_THOUSAND);
+//        BookRoomRequest bookRoomRequest = new BookRoomRequest("lota", "solomon", "lota@gmail.com",
+//                 Gender.MALE, Payment.TWO_HUNDRED_THOUSAND);
         bookingService.bookRoom(bookRoomRequest);
         assertThat(bookingService.getAllUsers().size(), is(1));
     }
@@ -49,8 +51,6 @@ class BookingServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-//                .password("lota123")
-//                .confirmPassword("lota123")
                 .gender(Gender.MALE)
                 .build();
 
@@ -65,8 +65,6 @@ class BookingServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-//                .password("lota123")
-//                .confirmPassword("lota123")
                 .gender(Gender.MALE)
                 .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
@@ -77,8 +75,6 @@ class BookingServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("lota@gmail.com")
-//                .password("ginagina")
-//                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .build();
 

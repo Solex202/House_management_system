@@ -89,8 +89,6 @@ class AdminServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-//                .password("lota123")
-//                .confirmPassword("lota123")
                 .gender(Gender.MALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -101,8 +99,6 @@ class AdminServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("gina@gmail.com")
-//                .password("ginagina")
-//                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
@@ -126,8 +122,6 @@ class AdminServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-//                .password("lota123")
-//                .confirmPassword("lota123")
                 .gender(Gender.MALE)
                 .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
@@ -138,8 +132,6 @@ class AdminServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("gina@gmail.com")
-//                .password("ginagina")
-//                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .payment(Payment.SIX_HUNDRED_THOUSAND)
                 .build();
@@ -163,8 +155,6 @@ class AdminServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-//                .password("lota123")
-//                .confirmPassword("lota123")
                 .gender(Gender.MALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -175,8 +165,6 @@ class AdminServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("gina@gmail.com")
-//                .password("ginagina")
-//                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -200,8 +188,6 @@ class AdminServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-//                .password("lota123")
-//                .confirmPassword("lota123")
                 .gender(Gender.MALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -212,8 +198,6 @@ class AdminServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("gina@gmail.com")
-//                .password("ginagina")
-//                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -249,8 +233,6 @@ class AdminServiceImplTest {
                 .firstName("lota")
                 .lastName("solomon")
                 .email("lota@gmail.com")
-//                .password("lota123")
-//                .confirmPassword("lota123")
                 .gender(Gender.FEMALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
@@ -261,8 +243,6 @@ class AdminServiceImplTest {
                 .firstName("gina")
                 .lastName("dimma")
                 .email("gina@gmail.com")
-//                .password("ginagina")
-//                .confirmPassword("ginagina")
                 .gender(Gender.FEMALE)
                 .payment(Payment.THREE_HUNDRED_THOUSAND)
                 .build();
