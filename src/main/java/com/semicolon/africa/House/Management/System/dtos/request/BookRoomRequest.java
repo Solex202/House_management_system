@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//@RequiredArgsConstructor
 public class BookRoomRequest
 {
     @Id
@@ -18,18 +19,16 @@ public class BookRoomRequest
     private String firstName;
     private String lastName;
     private String email;
-
     private Gender gender;
     private Payment payment;
     private LocalDateTime bookingTime = LocalDateTime.now();
 
-    public BookRoomRequest(String firstName,String lastName,String email,Gender gender,Payment payment)
+    public BookRoomRequest(String id, String firstName,String lastName,String email,Gender gender,Payment payment)
     {
-
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-
         this.gender = gender;
         this.payment = payment;
         bookingTime = LocalDateTime.now();

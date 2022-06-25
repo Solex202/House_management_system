@@ -45,23 +45,13 @@ class AdminServiceImplTest {
 
     @Test
     void testThatAdminUserCamAssignRoom(){
-        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .gender(Gender.FEMALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest = new BookRoomRequest("1","lota", "solomon", "lota@gmail.com",
+                Gender.FEMALE, Payment.TWO_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest);
 
-        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
-                .firstName("gina")
-                .lastName("dimma")
-                .email("gina@gmail.com")
-                .gender(Gender.FEMALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest2 = new BookRoomRequest("2","dee", "deji", "dee@gmail.com",
+                Gender.FEMALE, Payment.THREE_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest2);
 
@@ -85,23 +75,13 @@ class AdminServiceImplTest {
 
     @Test
     void testThatAdminUserCannotAssignFemaleToMAleRoom_throwException(){
-        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .gender(Gender.MALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest = new BookRoomRequest("1","lota", "solomon", "lota@gmail.com",
+                Gender.FEMALE, Payment.TWO_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest);
 
-        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
-                .firstName("gina")
-                .lastName("dimma")
-                .email("gina@gmail.com")
-                .gender(Gender.FEMALE)
-                .payment(Payment.SIX_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest2 = new BookRoomRequest("2","dee", "deji", "dee@gmail.com",
+                Gender.FEMALE, Payment.THREE_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest2);
 
@@ -118,23 +98,13 @@ class AdminServiceImplTest {
 
     @Test
     void testThatAdminUserCannotAssignMaleToFemaleRoom_throwException(){
-        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .gender(Gender.MALE)
-                .payment(Payment.SIX_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest = new BookRoomRequest("1","lota", "solomon", "lota@gmail.com",
+                Gender.MALE, Payment.TWO_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest);
 
-        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
-                .firstName("gina")
-                .lastName("dimma")
-                .email("gina@gmail.com")
-                .gender(Gender.FEMALE)
-                .payment(Payment.SIX_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest2 = new BookRoomRequest("2","dee", "deji", "dee@gmail.com",
+                Gender.FEMALE, Payment.THREE_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest2);
 
@@ -151,23 +121,13 @@ class AdminServiceImplTest {
 
     @Test
     void testThatAdminUserCannotAssignRoomWhenRoomNumberIsExceeded_throwException(){
-        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .gender(Gender.MALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest = new BookRoomRequest("1","lota", "solomon", "lota@gmail.com",
+                Gender.FEMALE, Payment.TWO_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest);
 
-        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
-                .firstName("gina")
-                .lastName("dimma")
-                .email("gina@gmail.com")
-                .gender(Gender.FEMALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest2 = new BookRoomRequest("2","dee", "deji", "dee@gmail.com",
+                Gender.FEMALE, Payment.THREE_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest2);
 
@@ -184,23 +144,13 @@ class AdminServiceImplTest {
 
     @Test
     void testThatAdminUserCannotAssignRoomWhenRoomNumberIsBelow_throwException(){
-        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .gender(Gender.MALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest = new BookRoomRequest("1","lota", "solomon", "lota@gmail.com",
+                Gender.FEMALE, Payment.TWO_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest);
 
-        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
-                .firstName("gina")
-                .lastName("dimma")
-                .email("gina@gmail.com")
-                .gender(Gender.FEMALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest2 = new BookRoomRequest("2","dee", "deji", "dee@gmail.com",
+                Gender.FEMALE, Payment.THREE_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest2);
 
@@ -229,23 +179,14 @@ class AdminServiceImplTest {
 
     @Test
     void testThatAdminUserCanEvictOccupantFromRoom(){
-        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .gender(Gender.FEMALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
+
+        BookRoomRequest bookRoomRequest = new BookRoomRequest("1","lota", "solomon", "lota@gmail.com",
+                Gender.FEMALE, Payment.TWO_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest);
 
-        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
-                .firstName("gina")
-                .lastName("dimma")
-                .email("gina@gmail.com")
-                .gender(Gender.FEMALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest2 = new BookRoomRequest("2","dee", "deji", "dee@gmail.com",
+                Gender.FEMALE, Payment.THREE_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest2);
 
@@ -272,25 +213,12 @@ class AdminServiceImplTest {
 
     @Test
     void testThatAdminUserCanFindBookingByEmail(){
-        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
-                .id("1")
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .gender(Gender.MALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest = new BookRoomRequest("1","lota","chukwu","lota@gmail.com",Gender.MALE, Payment.THREE_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest);
 
-        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
-                .id("2")
-                .firstName("gina")
-                .lastName("dimma")
-                .email("gina@gmail.com")
-                .gender(Gender.FEMALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest2 = new BookRoomRequest("2","dee", "deji", "dee@gmail.com",
+                Gender.FEMALE, Payment.THREE_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest2);
 
@@ -299,9 +227,9 @@ class AdminServiceImplTest {
 
        FindBookingResponse response = adminService.searchBookingByEmail(bookRoomRequest2.getEmail());
 
-       assertThat(response.getFirstName(),is("gina"));
-       assertThat(response.getLastName(),is("dimma"));
-       assertThat(response.getEmail(),is("gina@gmail.com"));
+       assertThat(response.getFirstName(),is("dee"));
+       assertThat(response.getLastName(),is("deji"));
+       assertThat(response.getEmail(),is("dee@gmail.com"));
        assertThat(response.getGender(),is(Gender.FEMALE));
        assertThat(response.getPayment(),is(Payment.THREE_HUNDRED_THOUSAND));
        assertThat(response.getId(),is(bookRoomRequest2.getId()));
@@ -309,36 +237,22 @@ class AdminServiceImplTest {
 
     @Test
     void testThatAdminUserCanFindBookingById(){
-        BookRoomRequest bookRoomRequest = BookRoomRequest.builder()
-                .id("1")
-                .firstName("lota")
-                .lastName("solomon")
-                .email("lota@gmail.com")
-                .gender(Gender.MALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest = new BookRoomRequest("1","lota","chukwu","lota@gmail.com",Gender.MALE, Payment.THREE_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest);
 
-        BookRoomRequest bookRoomRequest2 = BookRoomRequest.builder()
-                .id("2")
-                .firstName("gina")
-                .lastName("dimma")
-                .email("gina@gmail.com")
-                .gender(Gender.FEMALE)
-                .payment(Payment.THREE_HUNDRED_THOUSAND)
-                .build();
+        BookRoomRequest bookRoomRequest2 = new BookRoomRequest("2","dee", "deji", "dee@gmail.com",
+                Gender.FEMALE, Payment.THREE_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest2);
-
         List<User> users = bookingService.getAllUsers();
         assertThat(users.size(), equalTo(2));
 
         FindBookingResponse response = adminService.searchBookingByBookingId(bookRoomRequest2.getId());
 
-        assertThat(response.getFirstName(),is("gina"));
-        assertThat(response.getLastName(),is("dimma"));
-        assertThat(response.getEmail(),is("gina@gmail.com"));
+        assertThat(response.getFirstName(),is("dee"));
+        assertThat(response.getLastName(),is("deji"));
+        assertThat(response.getEmail(),is("dee@gmail.com"));
         assertThat(response.getGender(),is(Gender.FEMALE));
         assertThat(response.getPayment(),is(Payment.THREE_HUNDRED_THOUSAND));
     }

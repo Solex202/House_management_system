@@ -32,28 +32,30 @@ public class BookingServiceImpl implements BookingService {
 
         User user = userDetails(bookRoomRequest);
 
-
-        if(bookRoomRequest.getPayment() == Payment.TWO_HUNDRED_THOUSAND){
-            user.setRentalDuration(RentDuration.THREE_MONTHS);
-            LocalDateTime threeMonths = LocalDateTime.of(bookRoomRequest.getBookingTime().getYear(), bookRoomRequest.getBookingTime().getMonth().getValue() + 3, bookRoomRequest.getBookingTime().getDayOfMonth(), bookRoomRequest.getBookingTime().getHour(), bookRoomRequest.getBookingTime().getMinute(), bookRoomRequest.getBookingTime().getSecond());
-            user.setRentExpirationDate(threeMonths);
-        }else
-            if(bookRoomRequest.getPayment() == Payment.THREE_HUNDRED_THOUSAND){
-                user.setRentalDuration(RentDuration.SIX_MONTHS);
-                LocalDateTime sixMonths = LocalDateTime.of(bookRoomRequest.getBookingTime().getYear(), bookRoomRequest.getBookingTime().getMonth().getValue() + 6, bookRoomRequest.getBookingTime().getDayOfMonth(), bookRoomRequest.getBookingTime().getHour(), bookRoomRequest.getBookingTime().getMinute(), bookRoomRequest.getBookingTime().getSecond());
-                user.setRentExpirationDate(sixMonths);
-
-            }else
-                if(bookRoomRequest.getPayment() == Payment.SIX_HUNDRED_THOUSAND){
-                user.setRentalDuration(RentDuration.TWELVE_MONTHS);
-                    LocalDateTime twelveMonths = LocalDateTime.of(bookRoomRequest.getBookingTime().getYear() + 1, bookRoomRequest.getBookingTime().getMonth().getValue() , bookRoomRequest.getBookingTime().getDayOfMonth() - 1, bookRoomRequest.getBookingTime().getHour(), bookRoomRequest.getBookingTime().getMinute(), bookRoomRequest.getBookingTime().getSecond());
-                    user.setRentExpirationDate(twelveMonths);
-            }
+        rentDurationAndExpiration(bookRoomRequest, user);
 
         user.setPaymentStatus(true);
         User savedUser =  bookingRepository.save(user);
 
         return mapper.map(savedUser, UserDto.class);
+    }
+
+    private void rentDurationAndExpiration(BookRoomRequest bookRoomRequest, User user) {
+        if(bookRoomRequest.getPayment() == Payment.TWO_HUNDRED_THOUSAND){
+            user.setRentalDuration(RentDuration.THREE_MONTHS);
+            LocalDateTime threeMonths = LocalDateTime.of(bookRoomRequest.getBookingTime().getYear(), bookRoomRequest.getBookingTime().getMonth().getValue() + 3, bookRoomRequest.getBookingTime().getDayOfMonth(), bookRoomRequest.getBookingTime().getHour(), bookRoomRequest.getBookingTime().getMinute());
+            user.setRentExpirationDate(threeMonths);
+
+        }else if(bookRoomRequest.getPayment() == Payment.THREE_HUNDRED_THOUSAND){
+                user.setRentalDuration(RentDuration.SIX_MONTHS);
+                LocalDateTime sixMonths = LocalDateTime.of(bookRoomRequest.getBookingTime().getYear(), bookRoomRequest.getBookingTime().getMonth().getValue() + 6, bookRoomRequest.getBookingTime().getDayOfMonth(), bookRoomRequest.getBookingTime().getHour(), bookRoomRequest.getBookingTime().getMinute());
+                user.setRentExpirationDate(sixMonths);
+
+        }else if(bookRoomRequest.getPayment() == Payment.SIX_HUNDRED_THOUSAND){
+                user.setRentalDuration(RentDuration.TWELVE_MONTHS);
+                LocalDateTime twelveMonths = LocalDateTime.of(bookRoomRequest.getBookingTime().getYear() + 1, bookRoomRequest.getBookingTime().getMonth() , bookRoomRequest.getBookingTime().getDayOfMonth() - 1, bookRoomRequest.getBookingTime().getHour(), bookRoomRequest.getBookingTime().getMinute());
+                user.setRentExpirationDate(twelveMonths);
+        }
     }
 
     private User userDetails(BookRoomRequest bookRoomRequest) {
@@ -65,6 +67,7 @@ public class BookingServiceImpl implements BookingService {
         user.setGender(bookRoomRequest.getGender());
         user.setPayment(bookRoomRequest.getPayment());
         user.setBookingTime(bookRoomRequest.getBookingTime());
+
         return user;
     }
 
