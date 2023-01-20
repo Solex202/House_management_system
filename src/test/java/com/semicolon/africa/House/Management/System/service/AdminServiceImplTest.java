@@ -3,6 +3,7 @@ package com.semicolon.africa.House.Management.System.service;
 import com.semicolon.africa.House.Management.System.data.models.*;
 import com.semicolon.africa.House.Management.System.data.repository.RoomRepository;
 import com.semicolon.africa.House.Management.System.data.repository.BookingRepository;
+import com.semicolon.africa.House.Management.System.dtos.request.AdminLoginRequest;
 import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.request.BookRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.response.FindBookingResponse;
@@ -45,6 +46,13 @@ class AdminServiceImplTest {
 
     @Test
     void testThatAdminUserCamAssignRoom(){
+
+        AdminLoginRequest loginRequest = new AdminLoginRequest();
+        loginRequest.setUsername("HOSTELADMIN");
+        loginRequest.setPassword("HOSTELPASSWORD");
+
+        adminService.login(loginRequest);
+
         BookRoomRequest bookRoomRequest = new BookRoomRequest("1","lota", "solomon", "lota@gmail.com",
                 Gender.FEMALE, Payment.TWO_HUNDRED_THOUSAND);
 
@@ -210,7 +218,7 @@ class AdminServiceImplTest {
         assertThat(response, is("Tenant deleted"));
 
     }
-
+//FIXME dffg
     @Test
     void testThatAdminUserCanFindBookingByEmail(){
         BookRoomRequest bookRoomRequest = new BookRoomRequest("1","lota","chukwu","lota@gmail.com",Gender.MALE, Payment.THREE_HUNDRED_THOUSAND);
@@ -245,6 +253,7 @@ class AdminServiceImplTest {
                 Gender.FEMALE, Payment.THREE_HUNDRED_THOUSAND);
 
         bookingService.bookRoom(bookRoomRequest2);
+
         List<User> users = bookingService.getAllUsers();
         assertThat(users.size(), equalTo(2));
 
@@ -255,6 +264,11 @@ class AdminServiceImplTest {
         assertThat(response.getEmail(),is("dee@gmail.com"));
         assertThat(response.getGender(),is(Gender.FEMALE));
         assertThat(response.getPayment(),is(Payment.THREE_HUNDRED_THOUSAND));
+    }
+
+    @Test
+    void testThatAdminCannotFindBookingId_throwException(){
+        assertThrows(BookingNotFoundException.class, ()-> adminService.searchBookingByBookingId("9"));
     }
 
     @Test
@@ -280,6 +294,10 @@ class AdminServiceImplTest {
 
     }
 
+    @Test
+    void testThatAdminCanViewAllOccupantsIn_A_room(){
+
+    }
 
     @AfterEach
     void tearDown() {

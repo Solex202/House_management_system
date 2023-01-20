@@ -1,12 +1,9 @@
 package com.semicolon.africa.House.Management.System.data.models;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Data

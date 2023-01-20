@@ -12,16 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/houseApp")
+@RequestMapping("/api/v1/house-app")
 public class UserController {
 
     @Autowired
     private BookingService bookingService;
 
-    @Autowired
-    private AdminService adminService;
 
-    @PostMapping("/users/bookRoom")
+    @PostMapping("/user/book-room")
     public ResponseEntity<?> bookRoom(@RequestBody BookRoomRequest request){
         try{
             ApiResponse response = ApiResponse
@@ -41,41 +39,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/assignRoom")
-    public ResponseEntity<?> assignRoom(@RequestBody AssignRoomRequest request){
-        try{
-            ApiResponse response = ApiResponse
-                    .builder()
-                    .message("" + adminService.assignRoom(request))
-                    .isSuccessful(true)
-                    .build();
+//https://github.com/koushikkothagal/spring-boot-security
 
-            return  new ResponseEntity<>(response, HttpStatus.OK);
 
-        }catch (RoomNumberDoesNotExistException | MaleWingException | FemaleWingException | PaymentException ex){
-            ApiResponse response = ApiResponse
-                    .builder()
-                    .message(ex.getMessage())
-                    .isSuccessful(false)
-                    .build();
-
-            return  new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
-    }
-
-//    @DeleteMapping("/evictTenant/{email}")
-//    public ResponseEntity<?> evict(@PathVariable String email){
-//        try{
-//           return new ResponseEntity<>(adminService.evictTenant(email), HttpStatus.OK);
-//
-//        }catch (UserNotFoundException ex){
-//            ApiResponse response = ApiResponse
-//                    .builder()
-//                    .message(ex.getMessage())
-//                    .isSuccessful(false)
-//                    .build();
-//
-//            return  new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-//        }
-//    }
 }

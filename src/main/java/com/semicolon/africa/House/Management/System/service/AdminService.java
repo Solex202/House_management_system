@@ -1,6 +1,7 @@
 package com.semicolon.africa.House.Management.System.service;
 
 import com.semicolon.africa.House.Management.System.data.models.Room;
+import com.semicolon.africa.House.Management.System.dtos.request.AdminLoginRequest;
 import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.response.FindBookingResponse;
 
@@ -18,4 +19,6 @@ public interface AdminService {
 
 
     FindBookingResponse searchBookingByBookingId(String id);
+
+    void login(AdminLoginRequest loginRequest);
 }

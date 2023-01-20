@@ -1,11 +1,11 @@
 package com.semicolon.africa.House.Management.System.service;
 
-
 import com.semicolon.africa.House.Management.System.data.models.Gender;
 import com.semicolon.africa.House.Management.System.data.models.Room;
 import com.semicolon.africa.House.Management.System.data.models.User;
-import com.semicolon.africa.House.Management.System.data.repository.RoomRepository;
 import com.semicolon.africa.House.Management.System.data.repository.BookingRepository;
+import com.semicolon.africa.House.Management.System.data.repository.RoomRepository;
+import com.semicolon.africa.House.Management.System.dtos.request.AdminLoginRequest;
 import com.semicolon.africa.House.Management.System.dtos.request.AssignRoomRequest;
 import com.semicolon.africa.House.Management.System.dtos.response.FindBookingResponse;
 import com.semicolon.africa.House.Management.System.exception.*;
@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,7 +93,6 @@ public class AdminServiceImpl implements AdminService {
                 roomRepository.save(newRoom);
                 break;
             }
-//        }
         return "Tenant deleted";
     }
 
@@ -106,7 +104,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public FindBookingResponse searchBookingByBookingId(String id) {
 
-        User user = bookingRepository.findById(id).orElseThrow(()-> new UserNotFoundException("booking not found"));
+        User user = bookingRepository.findById(id).orElseThrow(()-> new BookingNotFoundException("booking not found"));
 
         FindBookingResponse response = new FindBookingResponse();
         response.setFirstName(user.getFirstName());
@@ -117,5 +115,12 @@ public class AdminServiceImpl implements AdminService {
         response.setBookingTime(user.getBookingTime());
         response.setRentalDuration(user.getRentalDuration());
         return response;
+    }
+
+    @Override
+    public void login(AdminLoginRequest loginRequest) {
+//        if(loginRequest.getUsername().equals(AdminLoginDetails.HOSTELADMIN) && loginRequest.getPassword().equals(AdminLoginDetails.HOSTELPASSWORD)){
+
+//        }
     }
 }
